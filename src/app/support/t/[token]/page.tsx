@@ -38,24 +38,24 @@ export default async function SupportTicketShowPage({
 
   return (
     <div className="max-w-2xl mx-auto space-y-5">
-      <div className="bg-white rounded-2xl border border-slate-200 p-5 flex items-center justify-between gap-3">
+      <div className="bg-elevated rounded-2xl border border-subtle p-5 flex items-center justify-between gap-3 shadow-sm">
         <div>
-          <h1 className="font-bold text-slate-900">
-            تیکت #{ticket.id}: {ticket.subject}
+          <h1 className="font-bold text-primary">
+            🎫 تیکت #{ticket.id}: {ticket.subject}
           </h1>
-          <div className="text-xs text-slate-500 mt-1">ثبت‌شده در {faDate(ticket.created_at, true)}</div>
+          <div className="text-xs text-tertiary mt-1">📅 ثبت‌شده در {faDate(ticket.created_at, true)}</div>
         </div>
         <StatusBadge value={ticket.status} />
       </div>
 
       {sp.created && (
-        <div className="rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-700 text-xs px-4 py-3 leading-relaxed">
-          تیکت ثبت شد. این صفحه را نگه دارید (یا لینک آن را ذخیره کنید)؛ پاسخ پشتیبانی همین‌جا نمایش داده می‌شود.
+        <div className="rounded-xl bg-pesteh-500/15 border border-pesteh-500/30 text-pesteh-700 dark:text-pesteh-300 text-xs px-4 py-3 leading-relaxed">
+          ✅ تیکت ثبت شد. این صفحه را نگه دارید (یا لینک آن را ذخیره کنید)؛ پاسخ پشتیبانی همین‌جا نمایش داده می‌شود.
         </div>
       )}
       {sp.ok && (
-        <div className="rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-700 text-xs px-4 py-3">
-          پیام شما ارسال شد.
+        <div className="rounded-xl bg-pesteh-500/15 border border-pesteh-500/30 text-pesteh-700 dark:text-pesteh-300 text-xs px-4 py-3">
+          ✅ پیام شما ارسال شد.
         </div>
       )}
 
@@ -63,35 +63,37 @@ export default async function SupportTicketShowPage({
         {messages.map((m) => (
           <div
             key={m.id}
-            className={`rounded-2xl border p-4 space-y-1.5 ${
-              m.author_type === 'staff' ? 'bg-indigo-50/70 border-indigo-200' : 'bg-white border-slate-200'
+            className={`rounded-2xl border p-4 space-y-1.5 shadow-sm ${
+              m.author_type === 'staff'
+                ? 'bg-firoozeh-500/10 border-firoozeh-500/30'
+                : 'bg-elevated border-subtle'
             }`}
           >
-            <div className="flex items-center justify-between text-xs text-slate-500">
-              <span className="font-semibold text-slate-800">
-                {m.author_type === 'staff' ? 'پشتیبانی' : m.author_name || faStatus(m.author_type)}
+            <div className="flex items-center justify-between text-xs text-tertiary">
+              <span className="font-semibold text-primary">
+                {m.author_type === 'staff' ? '🎧 پشتیبانی' : `👤 ${m.author_name || faStatus(m.author_type)}`}
               </span>
               <span>{faDate(m.created_at, true)}</span>
             </div>
-            <div className="text-sm text-slate-800 whitespace-pre-wrap leading-relaxed">{m.body}</div>
+            <div className="text-sm text-primary whitespace-pre-wrap leading-relaxed">{m.body}</div>
           </div>
         ))}
       </div>
 
-      <form action={portalReplyTicketAction} className="bg-white rounded-2xl border border-slate-200 p-5 space-y-3">
+      <form action={portalReplyTicketAction} className="bg-elevated rounded-2xl border border-subtle p-5 space-y-3 shadow-sm">
         <input type="hidden" name="token" value={ticket.access_token} />
         <textarea
           name="body"
           required
           rows={4}
-          placeholder="پاسخ خود را بنویسید..."
-          className="w-full rounded-xl border border-slate-300 px-3 py-2 text-sm"
+          placeholder="✍️ پاسخ خود را بنویسید..."
+          className="w-full rounded-xl border border-input bg-primary text-primary px-3 py-2 text-sm"
         />
         <button
           type="submit"
-          className="rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-medium px-5 py-2 cursor-pointer"
+          className="rounded-xl bg-brand hover:opacity-95 text-on-brand text-sm font-medium px-5 py-2 cursor-pointer"
         >
-          ارسال پیام
+          📤 ارسال پیام
         </button>
       </form>
     </div>

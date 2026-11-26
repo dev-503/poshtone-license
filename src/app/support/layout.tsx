@@ -1,23 +1,29 @@
 import Link from 'next/link';
-import { Headphones } from 'lucide-react';
+import { ThemeToggle } from '@/components/ThemeToggle';
 
 export default function SupportLayout({ children }: { children: React.ReactNode }) {
   return (
-    <div className="min-h-screen bg-slate-50 flex flex-col">
-      <header className="bg-white border-b border-slate-200">
-        <div className="max-w-4xl mx-auto px-4 py-3.5 flex items-center justify-between">
-          <Link href="/support" className="flex items-center gap-2 font-bold text-slate-900">
-            <span className="w-8 h-8 rounded-lg bg-indigo-600 text-white flex items-center justify-center">
-              <Headphones className="w-4 h-4" />
+    <div className="min-h-screen bg-primary text-primary flex flex-col">
+      <header className="bg-secondary border-b border-subtle">
+        <div className="max-w-4xl mx-auto px-4 py-3.5 flex items-center justify-between gap-3">
+          <Link href="/support" className="flex items-center gap-2.5 font-bold text-primary">
+            <span className="w-9 h-9 rounded-xl bg-brand text-on-brand flex items-center justify-center text-lg shadow-sm">
+              🛡️
             </span>
-            <span>پرتال مشتریان و پشتیبانی</span>
+            <div>
+              <div>پرتال مشتریان و پشتیبانی</div>
+              <div className="text-[11px] font-normal text-tertiary">مدیریت دستگاه‌ها · دانلود · تیکت</div>
+            </div>
           </Link>
-          <Link
-            href="/support/tickets/new"
-            className="rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-800 text-xs font-medium px-3.5 py-2 transition"
-          >
-            ثبت تیکت جدید
-          </Link>
+          <div className="flex items-center gap-2">
+            <ThemeToggle />
+            <Link
+              href="/support/tickets/new"
+              className="rounded-xl bg-brand hover:opacity-95 text-on-brand text-xs font-medium px-3.5 py-2 transition shadow-sm"
+            >
+              ✉️ ثبت تیکت جدید
+            </Link>
+          </div>
         </div>
       </header>
       <main className="flex-1 max-w-4xl w-full mx-auto px-4 py-8">{children}</main>

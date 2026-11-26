@@ -22,103 +22,103 @@ export default async function ProductsPage({
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
-        <h1 className="text-xl font-bold text-slate-900">محصولات</h1>
+        <h1 className="text-xl font-bold text-primary flex items-center gap-2">
+          <span>📦</span>
+          <span>محصولات</span>
+        </h1>
         {editing && (
-          <Link
-            href="/admin/products"
-            className="text-sm text-indigo-600 hover:underline"
-          >
-            + محصول جدید
+          <Link href="/admin/products" className="text-sm text-brand hover:underline font-medium">
+            ✨ محصول جدید
           </Link>
         )}
       </div>
 
       {sp.ok && (
-        <div className="rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-700 text-sm px-4 py-3">
-          تغییرات با موفقیت ذخیره شد.
+        <div className="rounded-xl bg-pesteh-500/15 border border-pesteh-500/30 text-pesteh-700 dark:text-pesteh-300 text-sm px-4 py-3">
+          ✅ تغییرات با موفقیت ذخیره شد.
         </div>
       )}
       {sp.error && (
-        <div className="rounded-xl bg-rose-50 border border-rose-200 text-rose-700 text-sm px-4 py-3">
-          خطا: {sp.error}
+        <div className="rounded-xl bg-anar-500/15 border border-anar-500/30 text-anar-700 dark:text-anar-300 text-sm px-4 py-3">
+          ❌ خطا: {sp.error}
         </div>
       )}
 
       <div className="grid lg:grid-cols-3 gap-6">
         <form
           action={saveProductAction}
-          className="bg-white rounded-2xl border border-slate-200 p-5 space-y-4 h-fit"
+          className="bg-elevated rounded-2xl border border-subtle p-5 space-y-4 h-fit shadow-sm"
         >
-          <h2 className="font-semibold text-slate-900">
-            {editing ? `ویرایش: ${editing.name}` : 'افزودن محصول جدید'}
+          <h2 className="font-semibold text-primary">
+            {editing ? `✏️ ویرایش: ${editing.name}` : '➕ افزودن محصول جدید'}
           </h2>
           {editing && <input type="hidden" name="id" value={editing.id} />}
 
           <div>
-            <label className="block text-xs font-medium text-slate-600 mb-1">نام محصول</label>
+            <label className="block text-xs font-medium text-secondary mb-1">نام محصول</label>
             <input
               name="name"
               required
               defaultValue={editing?.name ?? ''}
               placeholder="مثلاً حسابداری ترید"
-              className="w-full rounded-xl border border-slate-300 px-3 py-2 text-sm"
+              className="w-full rounded-xl border border-input bg-primary text-primary px-3 py-2 text-sm"
             />
           </div>
 
           <div>
-            <label className="block text-xs font-medium text-slate-600 mb-1">Slug ثابت (انگلیسی)</label>
+            <label className="block text-xs font-medium text-secondary mb-1">Slug ثابت (انگلیسی)</label>
             <input
               name="slug"
               required
               dir="ltr"
               defaultValue={editing?.slug ?? ''}
               placeholder="trade-accounting"
-              className="w-full rounded-xl border border-slate-300 px-3 py-2 text-sm font-mono"
+              className="w-full rounded-xl border border-input bg-primary text-primary px-3 py-2 text-sm font-mono"
             />
           </div>
 
           <div className="grid grid-cols-2 gap-3">
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">پلتفرم</label>
+              <label className="block text-xs font-medium text-secondary mb-1">پلتفرم</label>
               <select
                 name="platform"
                 defaultValue={editing?.platform ?? 'windows'}
-                className="w-full rounded-xl border border-slate-300 px-3 py-2 text-sm bg-white"
+                className="w-full rounded-xl border border-input bg-primary text-primary px-3 py-2 text-sm"
               >
-                <option value="windows">ویندوز (Rust)</option>
-                <option value="android">اندروید (Kotlin)</option>
-                <option value="wordpress">وردپرس (PHP)</option>
-                <option value="other">سایر</option>
+                <option value="windows">🪟 ویندوز (Rust)</option>
+                <option value="android">🤖 اندروید (Kotlin)</option>
+                <option value="wordpress">🌐 وردپرس (PHP)</option>
+                <option value="other">⚙️ سایر</option>
               </select>
             </div>
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">سقف دستگاه پیش‌فرض</label>
+              <label className="block text-xs font-medium text-secondary mb-1">سقف دستگاه</label>
               <input
                 name="default_max_devices"
                 type="number"
                 min={1}
                 defaultValue={editing?.default_max_devices ?? 1}
-                className="w-full rounded-xl border border-slate-300 px-3 py-2 text-sm"
+                className="w-full rounded-xl border border-input bg-primary text-primary px-3 py-2 text-sm"
               />
             </div>
           </div>
 
           <div>
-            <label className="block text-xs font-medium text-slate-600 mb-1">
-              روزهای دوره آزمایشی (۰ = غیرفعال)
+            <label className="block text-xs font-medium text-secondary mb-1">
+              🧪 روزهای دوره آزمایشی (۰ = غیرفعال)
             </label>
             <input
               name="trial_days"
               type="number"
               min={0}
               defaultValue={editing?.trial_days ?? 0}
-              className="w-full rounded-xl border border-slate-300 px-3 py-2 text-sm"
+              className="w-full rounded-xl border border-input bg-primary text-primary px-3 py-2 text-sm"
             />
           </div>
 
           <div>
-            <label className="block text-xs font-medium text-slate-600 mb-1">
-              قابلیت‌ها (Entitlements — هر خط یک کلید)
+            <label className="block text-xs font-medium text-secondary mb-1">
+              🎛️ قابلیت‌ها (هر خط یک کلید)
             </label>
             <textarea
               name="features"
@@ -126,27 +126,26 @@ export default async function ProductsPage({
               dir="ltr"
               defaultValue={(editing?.features ?? []).join('\n')}
               placeholder={'pdf_export\nmulti_user'}
-              className="w-full rounded-xl border border-slate-300 px-3 py-2 text-sm font-mono"
+              className="w-full rounded-xl border border-input bg-primary text-primary px-3 py-2 text-sm font-mono"
             />
           </div>
 
           <div>
-            <label className="block text-xs font-medium text-slate-600 mb-1">توضیحات</label>
+            <label className="block text-xs font-medium text-secondary mb-1">توضیحات</label>
             <textarea
               name="description"
               rows={2}
               defaultValue={editing?.description ?? ''}
-              className="w-full rounded-xl border border-slate-300 px-3 py-2 text-sm"
+              className="w-full rounded-xl border border-input bg-primary text-primary px-3 py-2 text-sm"
             />
           </div>
 
-          <div className="flex items-center gap-5 text-sm">
+          <div className="flex items-center gap-5 text-sm text-primary">
             <label className="flex items-center gap-2 cursor-pointer">
               <input
                 type="checkbox"
                 name="requires_license"
                 defaultChecked={editing ? editing.requires_license : true}
-                className="rounded border-slate-300"
               />
               نیازمند لایسنس برای دانلود
             </label>
@@ -155,7 +154,6 @@ export default async function ProductsPage({
                 type="checkbox"
                 name="active"
                 defaultChecked={editing ? editing.active : true}
-                className="rounded border-slate-300"
               />
               فعال
             </label>
@@ -163,16 +161,16 @@ export default async function ProductsPage({
 
           <button
             type="submit"
-            className="w-full rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-medium py-2.5 text-sm transition cursor-pointer"
+            className="w-full rounded-xl bg-brand hover:opacity-95 text-on-brand font-medium py-2.5 text-sm transition cursor-pointer shadow-sm"
           >
-            {editing ? 'ذخیره تغییرات' : 'ایجاد محصول'}
+            {editing ? '💾 ذخیره تغییرات' : '✨ ایجاد محصول'}
           </button>
         </form>
 
-        <div className="lg:col-span-2 bg-white rounded-2xl border border-slate-200 overflow-hidden">
+        <div className="lg:col-span-2 bg-elevated rounded-2xl border border-subtle overflow-hidden shadow-sm">
           <div className="overflow-x-auto">
             <table className="w-full text-sm">
-              <thead className="bg-slate-50 border-b border-slate-200 text-slate-600 text-xs">
+              <thead className="bg-secondary border-b border-subtle text-tertiary text-xs">
                 <tr>
                   <th className="text-right py-3 px-4">محصول</th>
                   <th className="text-right py-3 px-4">پلتفرم</th>
@@ -181,25 +179,25 @@ export default async function ProductsPage({
                   <th className="text-right py-3 px-4">عملیات</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-slate-100">
+              <tbody className="divide-y divide-subtle">
                 {list.length === 0 ? (
                   <tr>
-                    <td colSpan={5} className="py-8 text-center text-slate-500">
-                      هنوز محصولی ثبت نشده است.
+                    <td colSpan={5} className="py-8 text-center text-tertiary">
+                      📭 هنوز محصولی ثبت نشده است.
                     </td>
                   </tr>
                 ) : (
                   list.map((p) => (
-                    <tr key={p.id} className="hover:bg-slate-50/70">
+                    <tr key={p.id} className="hover:bg-muted/60 transition">
                       <td className="py-3 px-4">
-                        <div className="font-medium text-slate-900">{p.name}</div>
-                        <div className="text-xs text-slate-500 font-mono" dir="ltr">
+                        <div className="font-medium text-primary">{p.name}</div>
+                        <div className="text-xs text-tertiary font-mono" dir="ltr">
                           {p.slug}
                         </div>
                       </td>
-                      <td className="py-3 px-4 text-slate-600">{faStatus(p.platform)}</td>
-                      <td className="py-3 px-4 text-slate-600">
-                        {p.trial_days > 0 ? `${faNum(p.trial_days)} روز` : '—'}
+                      <td className="py-3 px-4 text-secondary">{faStatus(p.platform)}</td>
+                      <td className="py-3 px-4 text-secondary">
+                        {p.trial_days > 0 ? `🧪 ${faNum(p.trial_days)} روز` : '—'}
                       </td>
                       <td className="py-3 px-4">
                         <StatusBadge value={p.active ? 'active' : 'suspended'} />
@@ -208,23 +206,23 @@ export default async function ProductsPage({
                         <div className="flex items-center gap-3">
                           <Link
                             href={`/admin/products?edit=${p.id}`}
-                            className="text-indigo-600 hover:underline text-xs font-medium"
+                            className="text-brand hover:underline text-xs font-medium"
                           >
-                            ویرایش
+                            ✏️ ویرایش
                           </Link>
                           <Link
                             href={`/admin/ai-guide?product=${p.id}`}
-                            className="text-slate-600 hover:underline text-xs"
+                            className="text-secondary hover:underline text-xs"
                           >
-                            راهنمای AI
+                            🤖 راهنمای AI
                           </Link>
                           <form action={deleteProductAction}>
                             <input type="hidden" name="id" value={p.id} />
                             <button
                               type="submit"
-                              className="text-rose-600 hover:underline text-xs cursor-pointer"
+                              className="text-anar-600 dark:text-anar-400 hover:underline text-xs cursor-pointer"
                             >
-                              حذف
+                              🗑️ حذف
                             </button>
                           </form>
                         </div>

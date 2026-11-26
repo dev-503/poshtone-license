@@ -24,12 +24,15 @@ export default async function AiGuidePage({
   return (
     <div className="space-y-6">
       <div className="flex flex-wrap items-center justify-between gap-3">
-        <h1 className="text-xl font-bold text-slate-900">دستورالعمل اتصال AI به کلاینت</h1>
+        <h1 className="text-xl font-bold text-primary flex items-center gap-2">
+          <span>🤖</span>
+          <span>دستورالعمل اتصال AI به کلاینت</span>
+        </h1>
       </div>
 
       {products.length === 0 ? (
-        <div className="bg-white rounded-2xl border border-slate-200 p-6 text-sm text-slate-600">
-          ابتدا یک <Link href="/admin/products" className="text-indigo-600 underline">محصول</Link> بسازید.
+        <div className="bg-elevated rounded-2xl border border-subtle p-6 text-sm text-secondary">
+          📦 ابتدا یک <Link href="/admin/products" className="text-brand underline">محصول</Link> بسازید.
         </div>
       ) : (
         <>
@@ -40,38 +43,38 @@ export default async function AiGuidePage({
                 href={`/admin/ai-guide?product=${p.id}`}
                 className={`px-3.5 py-1.5 rounded-xl text-xs font-medium border transition ${
                   selected?.id === p.id
-                    ? 'bg-indigo-600 text-white border-indigo-600'
-                    : 'bg-white text-slate-700 border-slate-200 hover:bg-slate-50'
+                    ? 'bg-brand text-on-brand border-brand'
+                    : 'bg-elevated text-secondary border-subtle hover:bg-muted'
                 }`}
               >
-                {p.name} ({p.platform})
+                📦 {p.name} ({p.platform})
               </Link>
             ))}
           </div>
 
           {built && (
             <div className="space-y-5">
-              <div className="bg-white rounded-2xl border border-slate-200 p-5 space-y-3">
+              <div className="bg-elevated rounded-2xl border border-subtle p-5 space-y-3 shadow-sm">
                 <div className="flex items-center justify-between">
-                  <h2 className="font-semibold text-slate-900 text-sm">پرامپت آماده + دستورالعمل کامل</h2>
+                  <h2 className="font-semibold text-primary text-sm">✨ پرامپت آماده + دستورالعمل کامل</h2>
                   <CopyButton
                     text={`${built.prompt}\n\n${built.guide}`}
                     label="کپی پرامپت + دستورالعمل کامل"
                   />
                 </div>
-                <pre className="text-xs bg-slate-50 border border-slate-200 rounded-xl p-4 whitespace-pre-wrap leading-relaxed">
+                <pre className="text-xs bg-secondary border border-subtle rounded-xl p-4 whitespace-pre-wrap leading-relaxed text-primary">
                   {built.prompt}
                 </pre>
               </div>
 
-              <div className="bg-white rounded-2xl border border-slate-200 p-5 space-y-3">
+              <div className="bg-elevated rounded-2xl border border-subtle p-5 space-y-3 shadow-sm">
                 <div className="flex items-center justify-between">
-                  <h2 className="font-semibold text-slate-900 text-sm">متن کامل دستورالعمل و کد مرجع</h2>
+                  <h2 className="font-semibold text-primary text-sm">📘 متن کامل دستورالعمل و کد مرجع</h2>
                   <CopyButton text={built.guide} label="کپی دستورالعمل" />
                 </div>
                 <pre
                   dir="ltr"
-                  className="text-xs bg-slate-900 text-slate-100 rounded-xl p-4 overflow-x-auto max-h-[600px] leading-relaxed"
+                  className="text-xs bg-shab-950 text-shab-100 rounded-xl p-4 overflow-x-auto max-h-[600px] leading-relaxed border border-subtle"
                 >
                   {built.guide}
                 </pre>

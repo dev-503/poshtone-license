@@ -13,16 +13,16 @@ export function CreateLicenseForm({ products }: { products: Product[] }) {
   const features = Array.isArray(selectedProduct?.features) ? selectedProduct.features : [];
 
   return (
-    <form action={createLicensesAction} className="bg-white rounded-2xl border border-slate-200 p-6 space-y-5 max-w-2xl">
+    <form action={createLicensesAction} className="bg-elevated rounded-2xl border border-subtle p-6 space-y-5 max-w-2xl shadow-sm">
       <div className="grid sm:grid-cols-2 gap-4">
         <div>
-          <label className="block text-xs font-medium text-slate-600 mb-1">محصول</label>
+          <label className="block text-xs font-medium text-secondary mb-1">📦 محصول</label>
           <select
             name="product_id"
             required
             value={productId}
             onChange={(e) => setProductId(Number(e.target.value))}
-            className="w-full rounded-xl border border-slate-300 px-3 py-2.5 text-sm bg-white"
+            className="w-full rounded-xl border border-input bg-primary text-primary px-3 py-2.5 text-sm"
           >
             {products.map((p) => (
               <option key={p.id} value={p.id}>
@@ -32,22 +32,22 @@ export function CreateLicenseForm({ products }: { products: Product[] }) {
           </select>
         </div>
         <div>
-          <label className="block text-xs font-medium text-slate-600 mb-1">نوع لایسنس</label>
+          <label className="block text-xs font-medium text-secondary mb-1">🏷️ نوع لایسنس</label>
           <select
             name="type"
             value={type}
             onChange={(e) => setType(e.target.value as 'subscription' | 'perpetual')}
-            className="w-full rounded-xl border border-slate-300 px-3 py-2.5 text-sm bg-white"
+            className="w-full rounded-xl border border-input bg-primary text-primary px-3 py-2.5 text-sm"
           >
-            <option value="subscription">اشتراکی (مدت‌دار)</option>
-            <option value="perpetual">دائمی</option>
+            <option value="subscription">📅 اشتراکی (مدت‌دار)</option>
+            <option value="perpetual">♾️ دائمی</option>
           </select>
         </div>
       </div>
 
       {type === 'subscription' && (
-        <div className="rounded-xl bg-slate-50 border border-slate-200 p-4 space-y-3">
-          <div className="text-xs font-medium text-slate-700">مدت اعتبار</div>
+        <div className="rounded-xl bg-secondary border border-subtle p-4 space-y-3">
+          <div className="text-xs font-medium text-primary">⏳ مدت اعتبار</div>
           <div className="flex flex-wrap gap-2">
             {[
               { label: '۱ ماه', days: '30' },
@@ -62,8 +62,8 @@ export function CreateLicenseForm({ products }: { products: Product[] }) {
                 onClick={() => setDurationDays(p.days)}
                 className={`px-3 py-1.5 rounded-lg text-xs font-medium border transition cursor-pointer ${
                   durationDays === p.days
-                    ? 'bg-indigo-600 text-white border-indigo-600'
-                    : 'bg-white text-slate-700 border-slate-200 hover:bg-slate-100'
+                    ? 'bg-brand text-on-brand border-brand'
+                    : 'bg-elevated text-primary border-subtle hover:bg-muted'
                 }`}
               >
                 {p.label}
@@ -72,7 +72,7 @@ export function CreateLicenseForm({ products }: { products: Product[] }) {
           </div>
           <div className="grid sm:grid-cols-2 gap-3">
             <div>
-              <label className="block text-xs text-slate-500 mb-1">یا تعداد روز</label>
+              <label className="block text-xs text-tertiary mb-1">یا تعداد روز</label>
               <input
                 name="duration_days"
                 type="number"
@@ -80,16 +80,16 @@ export function CreateLicenseForm({ products }: { products: Product[] }) {
                 max={3650}
                 value={durationDays}
                 onChange={(e) => setDurationDays(e.target.value)}
-                className="w-full rounded-xl border border-slate-300 px-3 py-2 text-sm bg-white"
+                className="w-full rounded-xl border border-input bg-primary text-primary px-3 py-2 text-sm"
               />
             </div>
             <div>
-              <label className="block text-xs text-slate-500 mb-1">یا تاریخ انقضا (میلادی)</label>
+              <label className="block text-xs text-tertiary mb-1">یا تاریخ انقضا (میلادی)</label>
               <input
                 name="expires_at"
                 type="date"
                 dir="ltr"
-                className="w-full rounded-xl border border-slate-300 px-3 py-2 text-sm bg-white"
+                className="w-full rounded-xl border border-input bg-primary text-primary px-3 py-2 text-sm"
               />
             </div>
           </div>
@@ -98,75 +98,75 @@ export function CreateLicenseForm({ products }: { products: Product[] }) {
 
       <div className="grid sm:grid-cols-2 gap-4">
         <div>
-          <label className="block text-xs font-medium text-slate-600 mb-1">نام مشتری *</label>
+          <label className="block text-xs font-medium text-secondary mb-1">👤 نام مشتری *</label>
           <input
             name="customer_name"
             required
             placeholder="نام و نام خانوادگی یا شرکت"
-            className="w-full rounded-xl border border-slate-300 px-3 py-2 text-sm"
+            className="w-full rounded-xl border border-input bg-primary text-primary px-3 py-2 text-sm"
           />
         </div>
         <div>
-          <label className="block text-xs font-medium text-slate-600 mb-1">شماره موبایل</label>
+          <label className="block text-xs font-medium text-secondary mb-1">📱 شماره موبایل</label>
           <input
             name="customer_phone"
             dir="ltr"
             placeholder="09123456789"
-            className="w-full rounded-xl border border-slate-300 px-3 py-2 text-sm"
+            className="w-full rounded-xl border border-input bg-primary text-primary px-3 py-2 text-sm"
           />
         </div>
         <div>
-          <label className="block text-xs font-medium text-slate-600 mb-1">ایمیل</label>
+          <label className="block text-xs font-medium text-secondary mb-1">📧 ایمیل</label>
           <input
             name="customer_email"
             type="email"
             dir="ltr"
-            className="w-full rounded-xl border border-slate-300 px-3 py-2 text-sm"
+            className="w-full rounded-xl border border-input bg-primary text-primary px-3 py-2 text-sm"
           />
         </div>
         <div>
-          <label className="block text-xs font-medium text-slate-600 mb-1">
-            سقف دستگاه (پیش‌فرض: {selectedProduct?.default_max_devices ?? 1})
+          <label className="block text-xs font-medium text-secondary mb-1">
+            💻 سقف دستگاه (پیش‌فرض: {selectedProduct?.default_max_devices ?? 1})
           </label>
           <input
             name="max_devices"
             type="number"
             min={1}
             defaultValue={selectedProduct?.default_max_devices ?? 1}
-            className="w-full rounded-xl border border-slate-300 px-3 py-2 text-sm"
+            className="w-full rounded-xl border border-input bg-primary text-primary px-3 py-2 text-sm"
           />
         </div>
       </div>
 
       <div className="grid sm:grid-cols-3 gap-4">
         <div>
-          <label className="block text-xs font-medium text-slate-600 mb-1">پلن (اختیاری)</label>
-          <input name="plan" placeholder="Pro" className="w-full rounded-xl border border-slate-300 px-3 py-2 text-sm" />
+          <label className="block text-xs font-medium text-secondary mb-1">💎 پلن (اختیاری)</label>
+          <input name="plan" placeholder="Pro" className="w-full rounded-xl border border-input bg-primary text-primary px-3 py-2 text-sm" />
         </div>
         <div>
-          <label className="block text-xs font-medium text-slate-600 mb-1">شناسه سفارش</label>
-          <input name="order_ref" dir="ltr" className="w-full rounded-xl border border-slate-300 px-3 py-2 text-sm" />
+          <label className="block text-xs font-medium text-secondary mb-1">🧾 شناسه سفارش</label>
+          <input name="order_ref" dir="ltr" className="w-full rounded-xl border border-input bg-primary text-primary px-3 py-2 text-sm" />
         </div>
         <div>
-          <label className="block text-xs font-medium text-slate-600 mb-1">تعداد (صدور دسته‌ای)</label>
+          <label className="block text-xs font-medium text-secondary mb-1">🔢 تعداد (صدور دسته‌ای)</label>
           <input
             name="quantity"
             type="number"
             min={1}
             max={100}
             defaultValue={1}
-            className="w-full rounded-xl border border-slate-300 px-3 py-2 text-sm"
+            className="w-full rounded-xl border border-input bg-primary text-primary px-3 py-2 text-sm"
           />
         </div>
       </div>
 
       {features.length > 0 && (
         <div>
-          <div className="text-xs font-medium text-slate-600 mb-2">قابلیت‌های فعال (Entitlements)</div>
+          <div className="text-xs font-medium text-secondary mb-2">🎛️ قابلیت‌های فعال (Entitlements)</div>
           <div className="flex flex-wrap gap-3">
             {features.map((f) => (
-              <label key={f} className="inline-flex items-center gap-2 text-sm bg-slate-50 border border-slate-200 px-3 py-1.5 rounded-lg cursor-pointer">
-                <input type="checkbox" name="features" value={f} defaultChecked className="rounded border-slate-300" />
+              <label key={f} className="inline-flex items-center gap-2 text-sm bg-secondary border border-subtle px-3 py-1.5 rounded-lg cursor-pointer text-primary">
+                <input type="checkbox" name="features" value={f} defaultChecked />
                 <span className="font-mono text-xs">{f}</span>
               </label>
             ))}
@@ -175,15 +175,15 @@ export function CreateLicenseForm({ products }: { products: Product[] }) {
       )}
 
       <div>
-        <label className="block text-xs font-medium text-slate-600 mb-1">یادداشت داخلی</label>
-        <textarea name="notes" rows={2} className="w-full rounded-xl border border-slate-300 px-3 py-2 text-sm" />
+        <label className="block text-xs font-medium text-secondary mb-1">📝 یادداشت داخلی</label>
+        <textarea name="notes" rows={2} className="w-full rounded-xl border border-input bg-primary text-primary px-3 py-2 text-sm" />
       </div>
 
       <button
         type="submit"
-        className="rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-medium px-6 py-2.5 text-sm transition cursor-pointer"
+        className="rounded-xl bg-brand hover:opacity-95 text-on-brand font-medium px-6 py-2.5 text-sm transition cursor-pointer shadow-sm"
       >
-        صدور لایسنس
+        ✨ صدور لایسنس
       </button>
     </form>
   );

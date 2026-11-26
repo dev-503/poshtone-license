@@ -1,9 +1,23 @@
+@import "@kashi-ui/tailwind";
 @import "tailwindcss";
+@import "@kashi-ui/css";
 
 @layer base {
-  body {
-    background-color: #f8fafc;
-    color: #0f172a;
-    font-feature-settings: "ss01";
+  html {
+    font-family: var(--k-font-sans, "Vazirmatn", system-ui, sans-serif);
+    background-color: var(--k-bg-primary);
+    color: var(--k-text-primary);
   }
+
+  body {
+    min-height: 100vh;
+    background-color: var(--k-bg-primary);
+    color: var(--k-text-primary);
+    -webkit-font-smoothing: antialiased;
+  }
+}
+
+.kashi-tile-bg {
+  background-image: radial-gradient(color-mix(in srgb, var(--k-bg-brand) 12%, transparent) 1px, transparent 1px);
+  background-size: 20px 20px;
 }

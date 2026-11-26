@@ -30,30 +30,33 @@ export default async function TicketsPage({
   return (
     <div className="space-y-6">
       <div className="flex flex-wrap items-center justify-between gap-3">
-        <h1 className="text-xl font-bold text-slate-900">تیکت‌های پشتیبانی</h1>
+        <h1 className="text-xl font-bold text-primary flex items-center gap-2">
+          <span>🎫</span>
+          <span>تیکت‌های پشتیبانی</span>
+        </h1>
         <Link
           href="/admin/tickets/canned"
-          className="rounded-xl bg-white border border-slate-200 hover:bg-slate-50 text-slate-700 text-sm font-medium px-4 py-2 transition"
+          className="rounded-xl bg-elevated border border-subtle hover:bg-muted text-primary text-sm font-medium px-4 py-2 transition"
         >
-          پاسخ‌های آماده
+          ⚡ پاسخ‌های آماده
         </Link>
       </div>
 
       <div className="flex flex-wrap gap-2">
         {[
-          { key: '', label: 'همه' },
-          { key: 'open', label: 'باز' },
-          { key: 'pending', label: 'در انتظار مشتری' },
-          { key: 'resolved', label: 'حل‌شده' },
-          { key: 'closed', label: 'بسته' },
+          { key: '', label: '📋 همه' },
+          { key: 'open', label: '📬 باز' },
+          { key: 'pending', label: '⏳ در انتظار مشتری' },
+          { key: 'resolved', label: '✅ حل‌شده' },
+          { key: 'closed', label: '🔒 بسته' },
         ].map((tab) => (
           <Link
             key={tab.key}
             href={tab.key ? `/admin/tickets?status=${tab.key}` : '/admin/tickets'}
             className={`px-3.5 py-1.5 rounded-xl text-xs font-medium border transition ${
               (sp.status ?? '') === tab.key
-                ? 'bg-slate-900 text-white border-slate-900'
-                : 'bg-white text-slate-700 border-slate-200 hover:bg-slate-50'
+                ? 'bg-brand text-on-brand border-brand'
+                : 'bg-elevated text-secondary border-subtle hover:bg-muted'
             }`}
           >
             {tab.label}
@@ -61,9 +64,9 @@ export default async function TicketsPage({
         ))}
       </div>
 
-      <div className="bg-white rounded-2xl border border-slate-200 overflow-hidden">
+      <div className="bg-elevated rounded-2xl border border-subtle overflow-hidden shadow-sm">
         <table className="w-full text-sm">
-          <thead className="bg-slate-50 border-b border-slate-200 text-xs text-slate-600">
+          <thead className="bg-secondary border-b border-subtle text-xs text-tertiary">
             <tr>
               <th className="text-right py-3 px-4">موضوع</th>
               <th className="text-right py-3 px-4">مشتری</th>
@@ -73,30 +76,30 @@ export default async function TicketsPage({
               <th className="text-right py-3 px-4">آخرین پاسخ</th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-slate-100">
+          <tbody className="divide-y divide-subtle">
             {tickets.length === 0 ? (
               <tr>
-                <td colSpan={6} className="py-8 text-center text-slate-500">
-                  تیکتی یافت نشد.
+                <td colSpan={6} className="py-8 text-center text-tertiary">
+                  📭 تیکتی یافت نشد.
                 </td>
               </tr>
             ) : (
               tickets.map((t) => (
-                <tr key={t.id} className="hover:bg-slate-50/70">
+                <tr key={t.id} className="hover:bg-muted/60 transition">
                   <td className="py-3 px-4">
-                    <Link href={`/admin/tickets/${t.id}`} className="font-medium text-indigo-600 hover:underline">
+                    <Link href={`/admin/tickets/${t.id}`} className="font-medium text-brand hover:underline">
                       #{t.id} — {t.subject}
                     </Link>
                   </td>
-                  <td className="py-3 px-4 text-slate-700">{t.customer_name}</td>
-                  <td className="py-3 px-4 text-slate-600">{t.product?.name ?? '—'}</td>
+                  <td className="py-3 px-4 text-primary">👤 {t.customer_name}</td>
+                  <td className="py-3 px-4 text-secondary">{t.product?.name ?? '—'}</td>
                   <td className="py-3 px-4">
                     <StatusBadge value={t.priority} />
                   </td>
                   <td className="py-3 px-4">
                     <StatusBadge value={t.status} />
                   </td>
-                  <td className="py-3 px-4 text-xs text-slate-500">{faDate(t.last_reply_at, true)}</td>
+                  <td className="py-3 px-4 text-xs text-tertiary">{faDate(t.last_reply_at, true)}</td>
                 </tr>
               ))
             )}

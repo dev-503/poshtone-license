@@ -33,41 +33,44 @@ export default async function AnalyticsPage() {
 
   return (
     <div className="space-y-6">
-      <h1 className="text-xl font-bold text-slate-900">آنالیتیکس و تلمتری</h1>
+      <h1 className="text-xl font-bold text-primary flex items-center gap-2">
+        <span>📊</span>
+        <span>آنالیتیکس و تلمتری</span>
+      </h1>
 
       <div className="grid sm:grid-cols-3 gap-4">
-        <div className="bg-white rounded-2xl border border-slate-200 p-5">
-          <div className="text-xs text-slate-500">دستگاه‌های فعال کل</div>
-          <div className="text-2xl font-bold text-slate-900 mt-1">{faNum(acts.length)}</div>
+        <div className="bg-elevated rounded-2xl border border-subtle p-5 shadow-sm">
+          <div className="text-xs text-tertiary">💻 دستگاه‌های فعال کل</div>
+          <div className="text-2xl font-bold text-primary mt-1">{faNum(acts.length)}</div>
         </div>
-        <div className="bg-white rounded-2xl border border-slate-200 p-5">
-          <div className="text-xs text-slate-500">دستگاه‌های تلمتری (۳۰ روز)</div>
-          <div className="text-2xl font-bold text-slate-900 mt-1">{faNum(uniqueDevices30d)}</div>
+        <div className="bg-elevated rounded-2xl border border-subtle p-5 shadow-sm">
+          <div className="text-xs text-tertiary">📡 دستگاه‌های تلمتری (۳۰ روز)</div>
+          <div className="text-2xl font-bold text-primary mt-1">{faNum(uniqueDevices30d)}</div>
         </div>
-        <div className="bg-white rounded-2xl border border-slate-200 p-5">
-          <div className="text-xs text-slate-500">مجموع دانلود نسخه‌ها</div>
-          <div className="text-2xl font-bold text-slate-900 mt-1">{faNum(totalDownloads)}</div>
+        <div className="bg-elevated rounded-2xl border border-subtle p-5 shadow-sm">
+          <div className="text-xs text-tertiary">📥 مجموع دانلود نسخه‌ها</div>
+          <div className="text-2xl font-bold text-primary mt-1">{faNum(totalDownloads)}</div>
         </div>
       </div>
 
       <div className="grid lg:grid-cols-3 gap-6">
         {[
-          { title: 'نسخه‌های برنامه', rows: byVersion },
-          { title: 'سیستم‌عامل‌ها', rows: byOs },
-          { title: 'رویدادهای ۳۰ روز اخیر', rows: byEvent },
+          { title: '🏷️ نسخه‌های برنامه', rows: byVersion },
+          { title: '🖥️ سیستم‌عامل‌ها', rows: byOs },
+          { title: '⚡ رویدادهای ۳۰ روز اخیر', rows: byEvent },
         ].map((card) => (
-          <section key={card.title} className="bg-white rounded-2xl border border-slate-200 p-5 space-y-3">
-            <h2 className="font-semibold text-slate-900 text-sm">{card.title}</h2>
+          <section key={card.title} className="bg-elevated rounded-2xl border border-subtle p-5 space-y-3 shadow-sm">
+            <h2 className="font-semibold text-primary text-sm">{card.title}</h2>
             {card.rows.length === 0 ? (
-              <p className="text-xs text-slate-500">داده‌ای ثبت نشده است.</p>
+              <p className="text-xs text-tertiary">📭 داده‌ای ثبت نشده است.</p>
             ) : (
               <div className="space-y-2">
                 {card.rows.map(([label, count]) => (
                   <div key={label} className="flex items-center justify-between text-xs">
-                    <span className="font-mono text-slate-700 truncate" dir="ltr">
+                    <span className="font-mono text-secondary truncate" dir="ltr">
                       {label}
                     </span>
-                    <span className="font-semibold text-slate-900">{faNum(count)}</span>
+                    <span className="font-semibold text-primary bg-secondary px-2 py-0.5 rounded-md">{faNum(count)}</span>
                   </div>
                 ))}
               </div>

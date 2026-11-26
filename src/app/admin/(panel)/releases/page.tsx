@@ -26,25 +26,28 @@ export default async function ReleasesPage({
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
-        <h1 className="text-xl font-bold text-slate-900">نسخه‌ها و آپدیت</h1>
+        <h1 className="text-xl font-bold text-primary flex items-center gap-2">
+          <span>🚀</span>
+          <span>نسخه‌ها و آپدیت</span>
+        </h1>
         <Link
           href="/admin/releases/create"
-          className="rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-medium px-4 py-2 transition"
+          className="rounded-xl bg-brand hover:opacity-95 text-on-brand text-sm font-medium px-4 py-2 transition shadow-sm"
         >
-          + ثبت نسخه جدید
+          ✨ ثبت نسخه جدید
         </Link>
       </div>
 
       {sp.ok && (
-        <div className="rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-700 text-sm px-4 py-3">
-          نسخه با موفقیت ثبت شد.
+        <div className="rounded-xl bg-pesteh-500/15 border border-pesteh-500/30 text-pesteh-700 dark:text-pesteh-300 text-sm px-4 py-3">
+          ✅ نسخه با موفقیت ثبت شد.
         </div>
       )}
 
-      <div className="bg-white rounded-2xl border border-slate-200 overflow-hidden">
+      <div className="bg-elevated rounded-2xl border border-subtle overflow-hidden shadow-sm">
         <div className="overflow-x-auto">
           <table className="w-full text-sm">
-            <thead className="bg-slate-50 border-b border-slate-200 text-xs text-slate-600">
+            <thead className="bg-secondary border-b border-subtle text-xs text-tertiary">
               <tr>
                 <th className="text-right py-3 px-4">محصول / نسخه</th>
                 <th className="text-right py-3 px-4">کانال</th>
@@ -55,29 +58,29 @@ export default async function ReleasesPage({
                 <th className="text-right py-3 px-4">عملیات</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-slate-100">
+            <tbody className="divide-y divide-subtle">
               {releases.length === 0 ? (
                 <tr>
-                  <td colSpan={7} className="py-8 text-center text-slate-500">
-                    هنوز نسخه‌ای ثبت نشده است.
+                  <td colSpan={7} className="py-8 text-center text-tertiary">
+                    📭 هنوز نسخه‌ای ثبت نشده است.
                   </td>
                 </tr>
               ) : (
                 releases.map((r) => (
-                  <tr key={r.id} className="hover:bg-slate-50/70">
+                  <tr key={r.id} className="hover:bg-muted/60 transition">
                     <td className="py-3 px-4">
-                      <div className="font-medium text-slate-900">
-                        {r.product?.name} <span className="font-mono text-xs text-indigo-600">v{r.version}</span>
+                      <div className="font-medium text-primary">
+                        {r.product?.name} <span className="font-mono text-xs text-brand">v{r.version}</span>
                       </div>
-                      <div className="text-xs text-slate-500">
-                        {r.mandatory ? 'آپدیت اجباری · ' : ''}
-                        {faDate(r.created_at)}
+                      <div className="text-xs text-tertiary">
+                        {r.mandatory ? '⚠️ آپدیت اجباری · ' : ''}
+                        📅 {faDate(r.created_at)}
                       </div>
                     </td>
                     <td className="py-3 px-4">
                       <StatusBadge value={r.channel} />
                     </td>
-                    <td className="py-3 px-4 text-slate-600" dir="ltr">
+                    <td className="py-3 px-4 text-secondary" dir="ltr">
                       {formatBytes(r.file_size)}
                     </td>
                     <td className="py-3 px-4">
@@ -89,17 +92,17 @@ export default async function ReleasesPage({
                           min={1}
                           max={100}
                           defaultValue={r.rollout_percent}
-                          className="w-16 rounded-lg border border-slate-300 px-2 py-1 text-xs"
+                          className="w-16 rounded-lg border border-input bg-primary text-primary px-2 py-1 text-xs"
                         />
                         <button
                           type="submit"
-                          className="text-xs text-indigo-600 hover:underline cursor-pointer"
+                          className="text-xs text-brand hover:underline cursor-pointer font-medium"
                         >
-                          ٪
+                          ٪ ذخیره
                         </button>
                       </form>
                     </td>
-                    <td className="py-3 px-4 text-slate-600">{faNum(r.download_count)}</td>
+                    <td className="py-3 px-4 text-secondary">📥 {faNum(r.download_count)}</td>
                     <td className="py-3 px-4">
                       <StatusBadge value={r.is_published ? 'active' : 'suspended'} />
                     </td>
@@ -107,14 +110,14 @@ export default async function ReleasesPage({
                       <div className="flex items-center gap-3">
                         <form action={toggleReleaseAction}>
                           <input type="hidden" name="id" value={r.id} />
-                          <button type="submit" className="text-xs text-indigo-600 hover:underline cursor-pointer">
-                            {r.is_published ? 'لغو انتشار' : 'انتشار'}
+                          <button type="submit" className="text-xs text-brand hover:underline cursor-pointer">
+                            {r.is_published ? '⏸️ لغو انتشار' : '🚀 انتشار'}
                           </button>
                         </form>
                         <form action={deleteReleaseAction}>
                           <input type="hidden" name="id" value={r.id} />
-                          <button type="submit" className="text-xs text-rose-600 hover:underline cursor-pointer">
-                            حذف
+                          <button type="submit" className="text-xs text-anar-600 dark:text-anar-400 hover:underline cursor-pointer">
+                            🗑️ حذف
                           </button>
                         </form>
                       </div>

@@ -16,12 +16,15 @@ export default async function AuditPage() {
 
   return (
     <div className="space-y-6">
-      <h1 className="text-xl font-bold text-slate-900">گزارش ممیزی (Audit Log)</h1>
+      <h1 className="text-xl font-bold text-primary flex items-center gap-2">
+        <span>📜</span>
+        <span>گزارش ممیزی (Audit Log)</span>
+      </h1>
 
-      <div className="bg-white rounded-2xl border border-slate-200 overflow-hidden">
+      <div className="bg-elevated rounded-2xl border border-subtle overflow-hidden shadow-sm">
         <div className="overflow-x-auto">
           <table className="w-full text-sm">
-            <thead className="bg-slate-50 border-b border-slate-200 text-xs text-slate-600">
+            <thead className="bg-secondary border-b border-subtle text-xs text-tertiary">
               <tr>
                 <th className="text-right py-3 px-4">زمان</th>
                 <th className="text-right py-3 px-4">عملیات</th>
@@ -29,24 +32,24 @@ export default async function AuditPage() {
                 <th className="text-right py-3 px-4">IP</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-slate-100">
+            <tbody className="divide-y divide-subtle">
               {logs.length === 0 ? (
                 <tr>
-                  <td colSpan={4} className="py-8 text-center text-slate-500">
-                    رویدادی ثبت نشده است.
+                  <td colSpan={4} className="py-8 text-center text-tertiary">
+                    📭 رویدادی ثبت نشده است.
                   </td>
                 </tr>
               ) : (
                 logs.map((l) => (
-                  <tr key={l.id}>
-                    <td className="py-2.5 px-4 text-xs text-slate-500">{faDate(l.created_at, true)}</td>
-                    <td className="py-2.5 px-4 font-mono text-xs text-indigo-700" dir="ltr">
+                  <tr key={l.id} className="hover:bg-muted/60">
+                    <td className="py-2.5 px-4 text-xs text-tertiary">{faDate(l.created_at, true)}</td>
+                    <td className="py-2.5 px-4 font-mono text-xs text-brand" dir="ltr">
                       {l.action}
                     </td>
-                    <td className="py-2.5 px-4 text-xs text-slate-700" dir="ltr">
+                    <td className="py-2.5 px-4 text-xs text-secondary" dir="ltr">
                       {l.label || `${l.subject_type ?? ''} #${l.subject_id ?? ''}`}
                     </td>
-                    <td className="py-2.5 px-4 font-mono text-xs text-slate-500" dir="ltr">
+                    <td className="py-2.5 px-4 font-mono text-xs text-tertiary" dir="ltr">
                       {l.ip || '—'}
                     </td>
                   </tr>

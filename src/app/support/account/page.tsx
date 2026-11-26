@@ -57,78 +57,78 @@ export default async function SupportAccountPage({
 
   return (
     <div className="space-y-6">
-      <div className="bg-white rounded-2xl border border-slate-200 p-5 flex flex-wrap items-center justify-between gap-4">
+      <div className="bg-elevated rounded-2xl border border-subtle p-5 flex flex-wrap items-center justify-between gap-4 shadow-sm">
         <div className="space-y-1">
           <div className="flex items-center gap-2.5">
-            <h1 className="text-lg font-bold text-slate-900">{product?.name}</h1>
+            <h1 className="text-lg font-bold text-primary">📦 {product?.name}</h1>
             <StatusBadge value={effectiveLicenseStatus(license)} />
           </div>
-          <div className="text-xs text-slate-500 font-mono" dir="ltr">
-            {license.key} · {faStatus(license.type)} · انقضا:{' '}
-            {license.type === 'perpetual' ? 'نامحدود' : faDate(license.expires_at)}
+          <div className="text-xs text-tertiary font-mono" dir="ltr">
+            🔑 {license.key} · {faStatus(license.type)} · 📅 انقضا:{' '}
+            {license.type === 'perpetual' ? '♾️ نامحدود' : faDate(license.expires_at)}
           </div>
         </div>
         <form action={portalLogoutAction}>
           <button
             type="submit"
-            className="rounded-xl border border-slate-200 hover:bg-slate-100 text-slate-700 text-xs font-medium px-4 py-2 cursor-pointer"
+            className="rounded-xl border border-subtle bg-secondary hover:bg-muted text-primary text-xs font-medium px-4 py-2 cursor-pointer"
           >
-            خروج
+            🚪 خروج
           </button>
         </form>
       </div>
 
       {sp.ok && (
-        <div className="rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-700 text-sm px-4 py-3">
-          دستگاه آزاد شد. اکنون می‌توانید لایسنس را روی دستگاه جدید فعال کنید.
+        <div className="rounded-xl bg-pesteh-500/15 border border-pesteh-500/30 text-pesteh-700 dark:text-pesteh-300 text-sm px-4 py-3">
+          ✅ دستگاه آزاد شد. اکنون می‌توانید لایسنس را روی دستگاه جدید فعال کنید.
         </div>
       )}
       {sp.error && (
-        <div className="rounded-xl bg-rose-50 border border-rose-200 text-rose-700 text-sm px-4 py-3">
-          {sp.error}
+        <div className="rounded-xl bg-anar-500/15 border border-anar-500/30 text-anar-700 dark:text-anar-300 text-sm px-4 py-3">
+          ❌ {sp.error}
         </div>
       )}
 
       {latest && (
-        <section className="bg-white rounded-2xl border border-slate-200 p-5 flex flex-wrap items-center justify-between gap-4">
+        <section className="bg-elevated rounded-2xl border border-subtle p-5 flex flex-wrap items-center justify-between gap-4 shadow-sm">
           <div>
-            <h2 className="font-semibold text-slate-900 text-sm">
-              آخرین نسخه پایدار: <span className="font-mono text-indigo-600">v{latest.version}</span>
+            <h2 className="font-semibold text-primary text-sm">
+              🚀 آخرین نسخه پایدار: <span className="font-mono text-brand">v{latest.version}</span>
             </h2>
-            <p className="text-xs text-slate-500 mt-0.5">
-              حجم: <span dir="ltr">{formatBytes(latest.file_size)}</span> · انتشار: {faDate(latest.published_at)}
+            <p className="text-xs text-tertiary mt-0.5">
+              حجم: <span dir="ltr">{formatBytes(latest.file_size)}</span> · 📅 انتشار: {faDate(latest.published_at)}
             </p>
           </div>
           <a
             href={`/support/download/${latest.id}`}
-            className="rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-medium px-4 py-2.5 transition"
+            className="rounded-xl bg-brand hover:opacity-95 text-on-brand text-xs font-medium px-4 py-2.5 transition shadow-sm"
           >
-            دانلود نسخه جدید
+            📥 دانلود نسخه جدید
           </a>
         </section>
       )}
 
-      <section className="bg-white rounded-2xl border border-slate-200 p-5 space-y-4">
+      <section className="bg-elevated rounded-2xl border border-subtle p-5 space-y-4 shadow-sm">
         <div className="flex flex-wrap items-center justify-between gap-2">
-          <h2 className="font-semibold text-slate-900 text-sm">
-            دستگاه‌های فعال ({faNum(devices.length)} / {faNum(license.max_devices)})
+          <h2 className="font-semibold text-primary text-sm">
+            💻 دستگاه‌های فعال ({faNum(devices.length)} / {faNum(license.max_devices)})
           </h2>
           {!canReset && (
-            <span className="text-xs text-amber-700">
-              آزادسازی بعدی مجاز از: {faDate(new Date(nextResetMs), true)}
+            <span className="text-xs text-zafaran-700 dark:text-zafaran-300">
+              ⏳ آزادسازی بعدی مجاز از: {faDate(new Date(nextResetMs), true)}
             </span>
           )}
         </div>
 
         {devices.length === 0 ? (
-          <p className="text-sm text-slate-500">هیچ دستگاه فعالی ثبت نشده است.</p>
+          <p className="text-sm text-tertiary">📭 هیچ دستگاه فعالی ثبت نشده است.</p>
         ) : (
-          <div className="divide-y divide-slate-100">
+          <div className="divide-y divide-subtle">
             {devices.map((d) => (
               <div key={d.id} className="py-3 flex flex-wrap items-center justify-between gap-3">
                 <div>
-                  <div className="text-sm font-medium text-slate-900">{d.device_name || 'دستگاه بدون نام'}</div>
-                  <div className="text-xs text-slate-500 font-mono" dir="ltr">
+                  <div className="text-sm font-medium text-primary">🖥️ {d.device_name || 'دستگاه بدون نام'}</div>
+                  <div className="text-xs text-tertiary font-mono" dir="ltr">
                     {d.os || '—'} · v{d.app_version || '—'} · آخرین تماس: {faDate(d.last_seen_at, true)}
                   </div>
                 </div>
@@ -137,9 +137,9 @@ export default async function SupportAccountPage({
                     <input type="hidden" name="activation_id" value={d.id} />
                     <button
                       type="submit"
-                      className="rounded-lg border border-rose-200 bg-rose-50 hover:bg-rose-100 text-rose-700 text-xs px-3 py-1.5 cursor-pointer"
+                      className="rounded-lg border border-anar-500/30 bg-anar-500/10 hover:bg-anar-500/20 text-anar-700 dark:text-anar-300 text-xs px-3 py-1.5 cursor-pointer"
                     >
-                      آزادسازی دستگاه
+                      🔓 آزادسازی دستگاه
                     </button>
                   </form>
                 )}
@@ -149,24 +149,24 @@ export default async function SupportAccountPage({
         )}
       </section>
 
-      <section className="bg-white rounded-2xl border border-slate-200 p-5 space-y-4">
+      <section className="bg-elevated rounded-2xl border border-subtle p-5 space-y-4 shadow-sm">
         <div className="flex items-center justify-between">
-          <h2 className="font-semibold text-slate-900 text-sm">تیکت‌های من</h2>
-          <Link href="/support/tickets/new" className="text-xs text-indigo-600 hover:underline">
-            + تیکت جدید
+          <h2 className="font-semibold text-primary text-sm">🎫 تیکت‌های من</h2>
+          <Link href="/support/tickets/new" className="text-xs text-brand hover:underline font-medium">
+            ✉️ تیکت جدید
           </Link>
         </div>
         {tickets.length === 0 ? (
-          <p className="text-sm text-slate-500">هنوز تیکتی ثبت نکرده‌اید.</p>
+          <p className="text-sm text-tertiary">📭 هنوز تیکتی ثبت نکرده‌اید.</p>
         ) : (
-          <div className="divide-y divide-slate-100">
+          <div className="divide-y divide-subtle">
             {tickets.map((t) => (
               <Link
                 key={t.id}
                 href={`/support/t/${t.access_token}`}
-                className="py-2.5 flex items-center justify-between gap-3 hover:bg-slate-50 px-2 rounded-lg"
+                className="py-2.5 flex items-center justify-between gap-3 hover:bg-muted px-2 rounded-xl transition"
               >
-                <span className="text-sm font-medium text-slate-800">{t.subject}</span>
+                <span className="text-sm font-medium text-primary">💬 {t.subject}</span>
                 <StatusBadge value={t.status} />
               </Link>
             ))}
