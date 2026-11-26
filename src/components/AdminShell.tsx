@@ -15,6 +15,7 @@ const NAV = [
   { href: '/admin/api-keys', label: 'کلیدهای API', emoji: '🔐' },
   { href: '/admin/audit', label: 'گزارش ممیزی', emoji: '📜' },
   { href: '/admin/ai-guide', label: 'دستورالعمل AI', emoji: '🤖' },
+  { href: '/admin/settings', label: 'تنظیمات', emoji: '⚙️' },
 ];
 
 export function AdminShell({
