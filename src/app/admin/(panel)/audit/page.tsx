@@ -1,6 +1,7 @@
 import { requireAdmin } from '@/lib/admin-auth';
 import { faDate } from '@/lib/fa';
 import type { AuditLog } from '@/types/database';
+import { Icon } from '@/components/Icon';
 
 export const dynamic = 'force-dynamic';
 
@@ -17,7 +18,7 @@ export default async function AuditPage() {
   return (
     <div className="space-y-6">
       <h1 className="text-xl font-bold text-primary flex items-center gap-2">
-        <span>📜</span>
+        <Icon name="log" />
         <span>گزارش ممیزی (Audit Log)</span>
       </h1>
 
@@ -36,7 +37,7 @@ export default async function AuditPage() {
               {logs.length === 0 ? (
                 <tr>
                   <td colSpan={4} className="py-8 text-center text-tertiary">
-                    📭 رویدادی ثبت نشده است.
+                    <Icon name="empty" /> رویدادی ثبت نشده است.
                   </td>
                 </tr>
               ) : (

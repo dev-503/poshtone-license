@@ -3,6 +3,7 @@ import { notFound } from 'next/navigation';
 import { requireAdmin } from '@/lib/admin-auth';
 import { CopyButton } from '@/components/CopyButton';
 import type { License, Product } from '@/types/database';
+import { Icon } from '@/components/Icon';
 
 export const dynamic = 'force-dynamic';
 
@@ -36,7 +37,7 @@ export default async function BatchCreatedLicensesPage({
     <div className="space-y-6">
       <div className="flex flex-wrap items-center justify-between gap-3">
         <h1 className="text-xl font-bold text-primary">
-          🎉 لایسنس‌های صادرشده ({licenses.length} عدد)
+          <Icon name="party" /> لایسنس‌های صادرشده ({licenses.length} عدد)
         </h1>
         <div className="flex items-center gap-2">
           <CopyButton text={allKeysText} label="کپی همه کلیدها" />
@@ -65,7 +66,7 @@ export default async function BatchCreatedLicensesPage({
                   </Link>
                 </td>
                 <td className="py-2.5 px-4 text-secondary">{l.product?.name ?? '—'}</td>
-                <td className="py-2.5 px-4 text-primary">👤 {l.customer_name}</td>
+                <td className="py-2.5 px-4 text-primary"><Icon name="user" /> {l.customer_name}</td>
                 <td className="py-2.5 px-4">
                   <CopyButton text={l.key} />
                 </td>

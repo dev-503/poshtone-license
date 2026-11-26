@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { Icon } from '@/components/Icon';
 
 export function ThemeToggle({ className = '' }: { className?: string }) {
   const [theme, setTheme] = useState<'light' | 'dark'>('light');
@@ -26,7 +27,7 @@ export function ThemeToggle({ className = '' }: { className?: string }) {
       title={theme === 'light' ? 'حالت شب' : 'حالت روز'}
       className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium border border-subtle bg-elevated hover:bg-muted text-primary transition cursor-pointer ${className}`}
     >
-      <span>{theme === 'light' ? '🌙' : '☀️'}</span>
+      <Icon name={theme === 'light' ? 'moon' : 'sun'} />
       <span>{theme === 'light' ? 'حالت شب' : 'حالت روز'}</span>
     </button>
   );

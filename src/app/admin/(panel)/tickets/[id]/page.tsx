@@ -5,6 +5,7 @@ import { faDate, faStatus } from '@/lib/fa';
 import { StatusBadge } from '@/components/StatusBadge';
 import type { CannedReply, License, Product, Ticket, TicketMessage } from '@/types/database';
 import { replyTicketAction, updateTicketMetaAction } from '../actions';
+import { Icon } from '@/components/Icon';
 
 export const dynamic = 'force-dynamic';
 
@@ -46,7 +47,7 @@ export default async function TicketDetailPage({
       <div className="flex flex-wrap items-center justify-between gap-3">
         <div className="flex items-center gap-3">
           <h1 className="text-xl font-bold text-primary">
-            🎫 تیکت #{ticket.id}: {ticket.subject}
+            <Icon name="ticket" /> تیکت #{ticket.id}: {ticket.subject}
           </h1>
           <StatusBadge value={ticket.status} />
           <StatusBadge value={ticket.priority} />
@@ -58,7 +59,7 @@ export default async function TicketDetailPage({
 
       {sp.ok && (
         <div className="rounded-xl bg-pesteh-500/15 border border-pesteh-500/30 text-pesteh-700 dark:text-pesteh-300 text-sm px-4 py-3">
-          ✅ به‌روزرسانی انجام شد.
+          <Icon name="ok" /> به‌روزرسانی انجام شد.
         </div>
       )}
 
@@ -78,7 +79,7 @@ export default async function TicketDetailPage({
               >
                 <div className="flex items-center justify-between text-xs text-tertiary">
                   <span className="font-semibold text-primary">
-                    {m.author_type === 'note' ? '📌 ' : m.author_type === 'staff' ? '🎧 ' : '👤 '}
+                    <Icon name={m.author_type === 'note' ? 'pin' : m.author_type === 'staff' ? 'headphones' : 'user'} />{' '}
                     {m.author_name || faStatus(m.author_type)} ({faStatus(m.author_type)})
                   </span>
                   <span>{faDate(m.created_at, true)}</span>
@@ -90,7 +91,7 @@ export default async function TicketDetailPage({
 
           <form action={replyTicketAction} className="bg-elevated rounded-2xl border border-subtle p-5 space-y-4 shadow-sm">
             <input type="hidden" name="id" value={ticket.id} />
-            <h2 className="font-semibold text-primary">✍️ ارسال پاسخ یا یادداشت داخلی</h2>
+            <h2 className="font-semibold text-primary"><Icon name="sign" /> ارسال پاسخ یا یادداشت داخلی</h2>
             <textarea
               name="body"
               required
@@ -101,20 +102,20 @@ export default async function TicketDetailPage({
             <div className="flex flex-wrap items-center justify-between gap-3">
               <label className="inline-flex items-center gap-2 text-sm text-secondary cursor-pointer">
                 <input type="checkbox" name="is_note" />
-                📌 یادداشت داخلی (به مشتری نمایش داده نمی‌شود)
+                <Icon name="pin" /> یادداشت داخلی (به مشتری نمایش داده نمی‌شود)
               </label>
               <button
                 type="submit"
                 className="rounded-xl bg-brand hover:opacity-95 text-on-brand text-sm font-medium px-5 py-2 cursor-pointer"
               >
-                📤 ارسال
+                <Icon name="upload" /> ارسال
               </button>
             </div>
           </form>
 
           {canned.length > 0 && (
             <div className="bg-elevated rounded-2xl border border-subtle p-5 space-y-2 shadow-sm">
-              <div className="text-xs font-semibold text-secondary">⚡ پاسخ‌های آماده:</div>
+              <div className="text-xs font-semibold text-secondary"><Icon name="bolt" /> پاسخ‌های آماده:</div>
               <div className="space-y-2">
                 {canned.map((c) => (
                   <div key={c.id} className="rounded-xl bg-secondary border border-subtle p-3">
@@ -129,7 +130,7 @@ export default async function TicketDetailPage({
 
         <div className="space-y-4">
           <div className="bg-elevated rounded-2xl border border-subtle p-5 space-y-2 text-xs text-secondary shadow-sm">
-            <h2 className="text-sm font-semibold text-primary mb-2">👤 مشخصات مشتری</h2>
+            <h2 className="text-sm font-semibold text-primary mb-2"><Icon name="user" /> مشخصات مشتری</h2>
             <div>نام: <strong className="text-primary">{ticket.customer_name}</strong></div>
             <div>موبایل: <strong className="text-primary" dir="ltr">{ticket.customer_phone || '—'}</strong></div>
             <div>ایمیل: <strong className="text-primary" dir="ltr">{ticket.customer_email || '—'}</strong></div>
@@ -147,30 +148,30 @@ export default async function TicketDetailPage({
 
           <form action={updateTicketMetaAction} className="bg-elevated rounded-2xl border border-subtle p-5 space-y-3 shadow-sm">
             <input type="hidden" name="id" value={ticket.id} />
-            <h2 className="text-sm font-semibold text-primary">⚙️ تغییر وضعیت و اولویت</h2>
+            <h2 className="text-sm font-semibold text-primary"><Icon name="settings" /> تغییر وضعیت و اولویت</h2>
             <div>
               <label className="block text-xs text-secondary mb-1">وضعیت</label>
               <select name="status" defaultValue={ticket.status} className="w-full rounded-xl border border-input bg-primary text-primary px-3 py-2 text-sm">
-                <option value="open">📬 باز</option>
-                <option value="pending">⏳ در انتظار مشتری</option>
-                <option value="resolved">✅ حل‌شده</option>
-                <option value="closed">🔒 بسته</option>
+                <option value="open">باز</option>
+                <option value="pending">در انتظار مشتری</option>
+                <option value="resolved">حل‌شده</option>
+                <option value="closed">بسته</option>
               </select>
             </div>
             <div>
               <label className="block text-xs text-secondary mb-1">اولویت</label>
               <select name="priority" defaultValue={ticket.priority} className="w-full rounded-xl border border-input bg-primary text-primary px-3 py-2 text-sm">
                 <option value="low">▫️ کم</option>
-                <option value="normal">🔹 عادی</option>
-                <option value="high">⚡ زیاد</option>
-                <option value="urgent">🔥 فوری</option>
+                <option value="normal">عادی</option>
+                <option value="high">زیاد</option>
+                <option value="urgent">فوری</option>
               </select>
             </div>
             <button
               type="submit"
               className="w-full rounded-xl bg-brand hover:opacity-95 text-on-brand text-xs font-medium py-2 cursor-pointer"
             >
-              💾 ذخیره
+              <Icon name="save" /> ذخیره
             </button>
           </form>
         </div>

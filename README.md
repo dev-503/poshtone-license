@@ -17,6 +17,7 @@
 ### ۱. ساخت پروژه در Supabase
 1. در [Supabase](https://supabase.com) یک پروژه جدید بسازید.
 2. محتوای فایل `supabase/migrations/0001_initial_schema.sql` را در **SQL Editor** اجرا کنید تا جداول، RLS، توابع RPC و باکت `releases` ساخته شوند.
+   سپس به‌ترتیب `0002_settings.sql` و `0003_analytics_active_devices.sql` را هم اجرا کنید (تابع‌های آنالیتیکس و تعریف درست «دستگاه فعال»؛ بدون آن صفحه‌ی آنالیتیکس پیام خطا می‌دهد).
 3. در بخش **Authentication → Users** یک کاربر مدیر بسازید و سپس در SQL Editor دسترسی ادمین را فعال کنید:
    ```sql
    update public.profiles set is_admin = true where email = 'admin@example.com';

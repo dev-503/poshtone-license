@@ -4,6 +4,7 @@ import { Suspense, useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { createClient } from '@/lib/supabase/client';
 import { ThemeToggle } from '@/components/ThemeToggle';
+import { Icon } from '@/components/Icon';
 
 function LoginForm() {
   const router = useRouter();
@@ -12,7 +13,7 @@ function LoginForm() {
   const [password, setPassword] = useState('');
   const [error, setError] = useState<string | null>(
     searchParams.get('error') === 'not_admin'
-      ? '⛔ این حساب کاربری دسترسی مدیر (is_admin) ندارد.'
+      ? 'این حساب کاربری دسترسی مدیر (is_admin) ندارد.'
       : null,
   );
   const [loading, setLoading] = useState(false);
@@ -30,7 +31,7 @@ function LoginForm() {
       });
 
       if (authError) {
-        setError('❌ ایمیل یا رمز عبور اشتباه است.');
+        setError('ایمیل یا رمز عبور اشتباه است.');
         setLoading(false);
         return;
       }
@@ -39,7 +40,7 @@ function LoginForm() {
       router.push(next);
       router.refresh();
     } catch {
-      setError('⚠️ خطا در ارتباط با سرور احراز هویت.');
+      setError('خطا در ارتباط با سرور احراز هویت.');
       setLoading(false);
     }
   }
@@ -49,7 +50,7 @@ function LoginForm() {
       <div className="flex items-center justify-between gap-3">
         <div className="flex items-center gap-3">
           <div className="w-11 h-11 rounded-xl bg-brand text-on-brand flex items-center justify-center text-xl shadow-sm">
-            🔐
+            <Icon name="secret" /> 
           </div>
           <div>
             <h1 className="text-lg font-bold text-primary">ورود به پنل مدیریت</h1>
@@ -67,7 +68,7 @@ function LoginForm() {
 
       <form onSubmit={onSubmit} className="space-y-4">
         <div>
-          <label className="block text-sm font-medium text-secondary mb-1.5">📧 ایمیل</label>
+          <label className="block text-sm font-medium text-secondary mb-1.5"><Icon name="mail" /> ایمیل</label>
           <input
             type="email"
             required
@@ -79,7 +80,7 @@ function LoginForm() {
           />
         </div>
         <div>
-          <label className="block text-sm font-medium text-secondary mb-1.5">🔑 رمز عبور</label>
+          <label className="block text-sm font-medium text-secondary mb-1.5"><Icon name="key" /> رمز عبور</label>
           <input
             type="password"
             required
@@ -94,7 +95,7 @@ function LoginForm() {
           disabled={loading}
           className="w-full rounded-xl bg-brand hover:opacity-95 disabled:opacity-60 text-on-brand font-medium py-2.5 text-sm transition cursor-pointer shadow-sm"
         >
-          {loading ? '⏳ در حال ورود...' : '🔓 ورود به پنل'}
+          {loading ? 'در حال ورود...' : 'ورود به پنل'}
         </button>
       </form>
     </div>
@@ -104,7 +105,7 @@ function LoginForm() {
 export default function AdminLoginPage() {
   return (
     <main className="min-h-screen flex items-center justify-center p-4 bg-primary kashi-tile-bg">
-      <Suspense fallback={<div className="text-sm text-tertiary">⏳ در حال بارگذاری...</div>}>
+      <Suspense fallback={<div className="text-sm text-tertiary"><Icon name="pending" /> در حال بارگذاری...</div>}>
         <LoginForm />
       </Suspense>
     </main>

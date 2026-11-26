@@ -3,6 +3,7 @@ import { requireAdmin } from '@/lib/admin-auth';
 import { faDate } from '@/lib/fa';
 import { StatusBadge } from '@/components/StatusBadge';
 import type { Product, Ticket } from '@/types/database';
+import { Icon } from '@/components/Icon';
 
 export const dynamic = 'force-dynamic';
 
@@ -31,24 +32,24 @@ export default async function TicketsPage({
     <div className="space-y-6">
       <div className="flex flex-wrap items-center justify-between gap-3">
         <h1 className="text-xl font-bold text-primary flex items-center gap-2">
-          <span>🎫</span>
+          <Icon name="ticket" />
           <span>تیکت‌های پشتیبانی</span>
         </h1>
         <Link
           href="/admin/tickets/canned"
           className="rounded-xl bg-elevated border border-subtle hover:bg-muted text-primary text-sm font-medium px-4 py-2 transition"
         >
-          ⚡ پاسخ‌های آماده
+          <Icon name="bolt" /> پاسخ‌های آماده
         </Link>
       </div>
 
       <div className="flex flex-wrap gap-2">
         {[
-          { key: '', label: '📋 همه' },
-          { key: 'open', label: '📬 باز' },
-          { key: 'pending', label: '⏳ در انتظار مشتری' },
-          { key: 'resolved', label: '✅ حل‌شده' },
-          { key: 'closed', label: '🔒 بسته' },
+          { key: '', label: 'همه' },
+          { key: 'open', label: 'باز' },
+          { key: 'pending', label: 'در انتظار مشتری' },
+          { key: 'resolved', label: 'حل‌شده' },
+          { key: 'closed', label: 'بسته' },
         ].map((tab) => (
           <Link
             key={tab.key}
@@ -80,7 +81,7 @@ export default async function TicketsPage({
             {tickets.length === 0 ? (
               <tr>
                 <td colSpan={6} className="py-8 text-center text-tertiary">
-                  📭 تیکتی یافت نشد.
+                  <Icon name="empty" /> تیکتی یافت نشد.
                 </td>
               </tr>
             ) : (
@@ -91,7 +92,7 @@ export default async function TicketsPage({
                       #{t.id} — {t.subject}
                     </Link>
                   </td>
-                  <td className="py-3 px-4 text-primary">👤 {t.customer_name}</td>
+                  <td className="py-3 px-4 text-primary"><Icon name="user" /> {t.customer_name}</td>
                   <td className="py-3 px-4 text-secondary">{t.product?.name ?? '—'}</td>
                   <td className="py-3 px-4">
                     <StatusBadge value={t.priority} />

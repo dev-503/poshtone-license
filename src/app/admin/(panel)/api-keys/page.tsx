@@ -3,6 +3,7 @@ import { faDate } from '@/lib/fa';
 import { CopyButton } from '@/components/CopyButton';
 import type { ApiKey } from '@/types/database';
 import { createApiKeyAction, revokeApiKeyAction } from './actions';
+import { Icon } from '@/components/Icon';
 
 export const dynamic = 'force-dynamic';
 
@@ -19,7 +20,7 @@ export default async function ApiKeysPage({
   return (
     <div className="space-y-6">
       <h1 className="text-xl font-bold text-primary flex items-center gap-2">
-        <span>🔐</span>
+        <Icon name="secret" />
         <span>کلیدهای API مدیریتی</span>
       </h1>
 
@@ -27,7 +28,7 @@ export default async function ApiKeysPage({
         <div className="rounded-2xl bg-pesteh-500/15 border border-pesteh-500/30 p-5 space-y-2">
           <div className="flex items-center justify-between">
             <span className="text-sm font-semibold text-pesteh-700 dark:text-pesteh-300">
-              ✅ کلید ساخته شد (فقط همین یک‌بار نمایش داده می‌شود):
+              <Icon name="ok" /> کلید ساخته شد (فقط همین یک‌بار نمایش داده می‌شود):
             </span>
             <CopyButton text={sp.token} label="کپی توکن" />
           </div>
@@ -51,7 +52,7 @@ export default async function ApiKeysPage({
           type="submit"
           className="rounded-xl bg-brand hover:opacity-95 text-on-brand text-sm font-medium px-5 py-2 cursor-pointer"
         >
-          ➕ ساخت کلید API
+          <Icon name="plus" /> ساخت کلید API
         </button>
       </form>
 
@@ -70,22 +71,22 @@ export default async function ApiKeysPage({
             {keys.length === 0 ? (
               <tr>
                 <td colSpan={5} className="py-8 text-center text-tertiary">
-                  📭 کلیدی ثبت نشده است.
+                  <Icon name="empty" /> کلیدی ثبت نشده است.
                 </td>
               </tr>
             ) : (
               keys.map((k) => (
                 <tr key={k.id} className="hover:bg-muted/60">
-                  <td className="py-3 px-4 font-medium text-primary">🔑 {k.name}</td>
+                  <td className="py-3 px-4 font-medium text-primary"><Icon name="key" /> {k.name}</td>
                   <td className="py-3 px-4 font-mono text-xs text-secondary" dir="ltr">
                     {k.token_hint}…
                   </td>
                   <td className="py-3 px-4 text-secondary">{faDate(k.last_used_at, true)}</td>
                   <td className="py-3 px-4">
                     {k.revoked_at ? (
-                      <span className="text-xs text-anar-600 dark:text-anar-400">🚫 باطل‌شده</span>
+                      <span className="text-xs text-anar-600 dark:text-anar-400"><Icon name="ban" /> باطل‌شده</span>
                     ) : (
-                      <span className="text-xs text-pesteh-600 dark:text-pesteh-400">✅ فعال</span>
+                      <span className="text-xs text-pesteh-600 dark:text-pesteh-400"><Icon name="ok" /> فعال</span>
                     )}
                   </td>
                   <td className="py-3 px-4">
@@ -93,7 +94,7 @@ export default async function ApiKeysPage({
                       <form action={revokeApiKeyAction}>
                         <input type="hidden" name="id" value={k.id} />
                         <button type="submit" className="text-xs text-anar-600 dark:text-anar-400 hover:underline cursor-pointer">
-                          🚫 ابطال
+                          <Icon name="ban" /> ابطال
                         </button>
                       </form>
                     )}

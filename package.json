@@ -16,6 +16,7 @@
     "@aws-sdk/s3-request-presigner": "^3.700.0",
     "@kashi-ui/css": "^2.16.0",
     "@kashi-ui/tailwind": "^2.16.0",
+    "@fontsource-variable/vazirmatn": "^5.2.5",
     "@kashi-ui/tokens": "^2.16.0",
     "@supabase/ssr": "^0.5.2",
     "@supabase/supabase-js": "^2.49.1",

@@ -4,6 +4,7 @@ import { faDate, faNum, formatBytes } from '@/lib/fa';
 import { StatusBadge } from '@/components/StatusBadge';
 import type { Product, Release } from '@/types/database';
 import { deleteReleaseAction, toggleReleaseAction, updateRolloutAction } from './actions';
+import { Icon } from '@/components/Icon';
 
 export const dynamic = 'force-dynamic';
 
@@ -27,20 +28,20 @@ export default async function ReleasesPage({
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <h1 className="text-xl font-bold text-primary flex items-center gap-2">
-          <span>🚀</span>
+          <Icon name="rocket" />
           <span>نسخه‌ها و آپدیت</span>
         </h1>
         <Link
           href="/admin/releases/create"
           className="rounded-xl bg-brand hover:opacity-95 text-on-brand text-sm font-medium px-4 py-2 transition shadow-sm"
         >
-          ✨ ثبت نسخه جدید
+          <Icon name="magic" /> ثبت نسخه جدید
         </Link>
       </div>
 
       {sp.ok && (
         <div className="rounded-xl bg-pesteh-500/15 border border-pesteh-500/30 text-pesteh-700 dark:text-pesteh-300 text-sm px-4 py-3">
-          ✅ نسخه با موفقیت ثبت شد.
+          <Icon name="ok" /> نسخه با موفقیت ثبت شد.
         </div>
       )}
 
@@ -62,7 +63,7 @@ export default async function ReleasesPage({
               {releases.length === 0 ? (
                 <tr>
                   <td colSpan={7} className="py-8 text-center text-tertiary">
-                    📭 هنوز نسخه‌ای ثبت نشده است.
+                    <Icon name="empty" /> هنوز نسخه‌ای ثبت نشده است.
                   </td>
                 </tr>
               ) : (
@@ -73,8 +74,8 @@ export default async function ReleasesPage({
                         {r.product?.name} <span className="font-mono text-xs text-brand">v{r.version}</span>
                       </div>
                       <div className="text-xs text-tertiary">
-                        {r.mandatory ? '⚠️ آپدیت اجباری · ' : ''}
-                        📅 {faDate(r.created_at)}
+                        {r.mandatory ? 'آپدیت اجباری · ' : ''}
+                        <Icon name="calendar" /> {faDate(r.created_at)}
                       </div>
                     </td>
                     <td className="py-3 px-4">
@@ -102,7 +103,7 @@ export default async function ReleasesPage({
                         </button>
                       </form>
                     </td>
-                    <td className="py-3 px-4 text-secondary">📥 {faNum(r.download_count)}</td>
+                    <td className="py-3 px-4 text-secondary"><Icon name="download" /> {faNum(r.download_count)}</td>
                     <td className="py-3 px-4">
                       <StatusBadge value={r.is_published ? 'active' : 'suspended'} />
                     </td>
@@ -111,13 +112,13 @@ export default async function ReleasesPage({
                         <form action={toggleReleaseAction}>
                           <input type="hidden" name="id" value={r.id} />
                           <button type="submit" className="text-xs text-brand hover:underline cursor-pointer">
-                            {r.is_published ? '⏸️ لغو انتشار' : '🚀 انتشار'}
+                            {r.is_published ? 'لغو انتشار' : 'انتشار'}
                           </button>
                         </form>
                         <form action={deleteReleaseAction}>
                           <input type="hidden" name="id" value={r.id} />
                           <button type="submit" className="text-xs text-anar-600 dark:text-anar-400 hover:underline cursor-pointer">
-                            🗑️ حذف
+                            <Icon name="trash" /> حذف
                           </button>
                         </form>
                       </div>

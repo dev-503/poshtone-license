@@ -4,6 +4,7 @@ import { faNum, faStatus } from '@/lib/fa';
 import { StatusBadge } from '@/components/StatusBadge';
 import type { Product } from '@/types/database';
 import { deleteProductAction, saveProductAction } from './actions';
+import { Icon } from '@/components/Icon';
 
 export const dynamic = 'force-dynamic';
 
@@ -23,24 +24,24 @@ export default async function ProductsPage({
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <h1 className="text-xl font-bold text-primary flex items-center gap-2">
-          <span>📦</span>
+          <Icon name="package" />
           <span>محصولات</span>
         </h1>
         {editing && (
           <Link href="/admin/products" className="text-sm text-brand hover:underline font-medium">
-            ✨ محصول جدید
+            <Icon name="magic" /> محصول جدید
           </Link>
         )}
       </div>
 
       {sp.ok && (
         <div className="rounded-xl bg-pesteh-500/15 border border-pesteh-500/30 text-pesteh-700 dark:text-pesteh-300 text-sm px-4 py-3">
-          ✅ تغییرات با موفقیت ذخیره شد.
+          <Icon name="ok" /> تغییرات با موفقیت ذخیره شد.
         </div>
       )}
       {sp.error && (
         <div className="rounded-xl bg-anar-500/15 border border-anar-500/30 text-anar-700 dark:text-anar-300 text-sm px-4 py-3">
-          ❌ خطا: {sp.error}
+          <Icon name="error" /> خطا: {sp.error}
         </div>
       )}
 
@@ -50,7 +51,7 @@ export default async function ProductsPage({
           className="bg-elevated rounded-2xl border border-subtle p-5 space-y-4 h-fit shadow-sm"
         >
           <h2 className="font-semibold text-primary">
-            {editing ? `✏️ ویرایش: ${editing.name}` : '➕ افزودن محصول جدید'}
+            {editing ? `ویرایش: ${editing.name}` : 'افزودن محصول جدید'}
           </h2>
           {editing && <input type="hidden" name="id" value={editing.id} />}
 
@@ -85,10 +86,10 @@ export default async function ProductsPage({
                 defaultValue={editing?.platform ?? 'windows'}
                 className="w-full rounded-xl border border-input bg-primary text-primary px-3 py-2 text-sm"
               >
-                <option value="windows">🪟 ویندوز (Rust)</option>
-                <option value="android">🤖 اندروید (Kotlin)</option>
-                <option value="wordpress">🌐 وردپرس (PHP)</option>
-                <option value="other">⚙️ سایر</option>
+                <option value="windows">ویندوز (Rust)</option>
+                <option value="android">اندروید (Kotlin)</option>
+                <option value="wordpress">وردپرس (PHP)</option>
+                <option value="other">سایر</option>
               </select>
             </div>
             <div>
@@ -105,7 +106,7 @@ export default async function ProductsPage({
 
           <div>
             <label className="block text-xs font-medium text-secondary mb-1">
-              🧪 روزهای دوره آزمایشی (۰ = غیرفعال)
+              <Icon name="trial" /> روزهای دوره آزمایشی (۰ = غیرفعال)
             </label>
             <input
               name="trial_days"
@@ -118,7 +119,7 @@ export default async function ProductsPage({
 
           <div>
             <label className="block text-xs font-medium text-secondary mb-1">
-              🎛️ قابلیت‌ها (هر خط یک کلید)
+              <Icon name="sliders" /> قابلیت‌ها (هر خط یک کلید)
             </label>
             <textarea
               name="features"
@@ -163,7 +164,7 @@ export default async function ProductsPage({
             type="submit"
             className="w-full rounded-xl bg-brand hover:opacity-95 text-on-brand font-medium py-2.5 text-sm transition cursor-pointer shadow-sm"
           >
-            {editing ? '💾 ذخیره تغییرات' : '✨ ایجاد محصول'}
+            {editing ? 'ذخیره تغییرات' : 'ایجاد محصول'}
           </button>
         </form>
 
@@ -183,7 +184,7 @@ export default async function ProductsPage({
                 {list.length === 0 ? (
                   <tr>
                     <td colSpan={5} className="py-8 text-center text-tertiary">
-                      📭 هنوز محصولی ثبت نشده است.
+                      <Icon name="empty" /> هنوز محصولی ثبت نشده است.
                     </td>
                   </tr>
                 ) : (
@@ -197,7 +198,7 @@ export default async function ProductsPage({
                       </td>
                       <td className="py-3 px-4 text-secondary">{faStatus(p.platform)}</td>
                       <td className="py-3 px-4 text-secondary">
-                        {p.trial_days > 0 ? `🧪 ${faNum(p.trial_days)} روز` : '—'}
+                        {p.trial_days > 0 ? `${faNum(p.trial_days)} روز` : '—'}
                       </td>
                       <td className="py-3 px-4">
                         <StatusBadge value={p.active ? 'active' : 'suspended'} />
@@ -208,13 +209,13 @@ export default async function ProductsPage({
                             href={`/admin/products?edit=${p.id}`}
                             className="text-brand hover:underline text-xs font-medium"
                           >
-                            ✏️ ویرایش
+                            <Icon name="edit" /> ویرایش
                           </Link>
                           <Link
                             href={`/admin/ai-guide?product=${p.id}`}
                             className="text-secondary hover:underline text-xs"
                           >
-                            🤖 راهنمای AI
+                            <Icon name="bot" /> راهنمای AI
                           </Link>
                           <form action={deleteProductAction}>
                             <input type="hidden" name="id" value={p.id} />
@@ -222,7 +223,7 @@ export default async function ProductsPage({
                               type="submit"
                               className="text-anar-600 dark:text-anar-400 hover:underline text-xs cursor-pointer"
                             >
-                              🗑️ حذف
+                              <Icon name="trash" /> حذف
                             </button>
                           </form>
                         </div>

@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { ThemeToggle } from '@/components/ThemeToggle';
+import { Icon } from '@/components/Icon';
 
 export default function HomePage() {
   return (
@@ -10,12 +11,12 @@ export default function HomePage() {
 
       <div className="max-w-xl w-full bg-elevated rounded-2xl shadow-lg border border-subtle p-8 text-center space-y-6">
         <div className="mx-auto w-16 h-16 rounded-2xl bg-brand text-on-brand flex items-center justify-center text-3xl shadow-md">
-          🏺
+          <Icon name="brand" /> 
         </div>
         <div className="space-y-2">
           <h1 className="text-2xl font-bold text-primary">License Hub</h1>
           <p className="text-sm text-secondary leading-relaxed">
-            🔐 سامانه مدیریت لایسنس، 🚀 انتشار آپدیت امضاشده (Ed25519)، 📊 آنالیتیکس و 🎫 پشتیبانی مشتریان
+            <Icon name="secret" /> سامانه مدیریت لایسنس، <Icon name="rocket" /> انتشار آپدیت امضاشده (Ed25519)، <Icon name="dot" /> آنالیتیکس و <Icon name="dot" /> پشتیبانی مشتریان
           </p>
         </div>
 
@@ -24,14 +25,14 @@ export default function HomePage() {
             href="/support"
             className="flex items-center justify-center gap-2 rounded-xl bg-brand hover:opacity-95 text-on-brand font-medium py-3 px-4 transition shadow-sm"
           >
-            <span>🛡️</span>
+            <Icon name="shield" />
             <span>پرتال مشتریان و پشتیبانی</span>
           </Link>
           <Link
             href="/admin"
             className="flex items-center justify-center gap-2 rounded-xl bg-secondary border border-subtle hover:bg-muted text-primary font-medium py-3 px-4 transition"
           >
-            <span>🏛️</span>
+            <Icon name="home" />
             <span>ورود به پنل مدیریت</span>
           </Link>
         </div>

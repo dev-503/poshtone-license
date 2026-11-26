@@ -7,6 +7,7 @@ import { compareVersions } from '@/lib/version';
 import { StatusBadge } from '@/components/StatusBadge';
 import type { Activation, Product, Release, Ticket } from '@/types/database';
 import { portalLogoutAction, portalRemoveDeviceAction } from '../actions';
+import { Icon } from '@/components/Icon';
 
 export const dynamic = 'force-dynamic';
 
@@ -60,12 +61,12 @@ export default async function SupportAccountPage({
       <div className="bg-elevated rounded-2xl border border-subtle p-5 flex flex-wrap items-center justify-between gap-4 shadow-sm">
         <div className="space-y-1">
           <div className="flex items-center gap-2.5">
-            <h1 className="text-lg font-bold text-primary">📦 {product?.name}</h1>
+            <h1 className="text-lg font-bold text-primary"><Icon name="package" /> {product?.name}</h1>
             <StatusBadge value={effectiveLicenseStatus(license)} />
           </div>
           <div className="text-xs text-tertiary font-mono" dir="ltr">
-            🔑 {license.key} · {faStatus(license.type)} · 📅 انقضا:{' '}
-            {license.type === 'perpetual' ? '♾️ نامحدود' : faDate(license.expires_at)}
+            <Icon name="key" /> {license.key} · {faStatus(license.type)} · <Icon name="calendar" /> انقضا:{' '}
+            {license.type === 'perpetual' ? 'نامحدود' : faDate(license.expires_at)}
           </div>
         </div>
         <form action={portalLogoutAction}>
@@ -73,19 +74,19 @@ export default async function SupportAccountPage({
             type="submit"
             className="rounded-xl border border-subtle bg-secondary hover:bg-muted text-primary text-xs font-medium px-4 py-2 cursor-pointer"
           >
-            🚪 خروج
+            <Icon name="logout" /> خروج
           </button>
         </form>
       </div>
 
       {sp.ok && (
         <div className="rounded-xl bg-pesteh-500/15 border border-pesteh-500/30 text-pesteh-700 dark:text-pesteh-300 text-sm px-4 py-3">
-          ✅ دستگاه آزاد شد. اکنون می‌توانید لایسنس را روی دستگاه جدید فعال کنید.
+          <Icon name="ok" /> دستگاه آزاد شد. اکنون می‌توانید لایسنس را روی دستگاه جدید فعال کنید.
         </div>
       )}
       {sp.error && (
         <div className="rounded-xl bg-anar-500/15 border border-anar-500/30 text-anar-700 dark:text-anar-300 text-sm px-4 py-3">
-          ❌ {sp.error}
+          <Icon name="error" /> {sp.error}
         </div>
       )}
 
@@ -93,17 +94,17 @@ export default async function SupportAccountPage({
         <section className="bg-elevated rounded-2xl border border-subtle p-5 flex flex-wrap items-center justify-between gap-4 shadow-sm">
           <div>
             <h2 className="font-semibold text-primary text-sm">
-              🚀 آخرین نسخه پایدار: <span className="font-mono text-brand">v{latest.version}</span>
+              <Icon name="rocket" /> آخرین نسخه پایدار: <span className="font-mono text-brand">v{latest.version}</span>
             </h2>
             <p className="text-xs text-tertiary mt-0.5">
-              حجم: <span dir="ltr">{formatBytes(latest.file_size)}</span> · 📅 انتشار: {faDate(latest.published_at)}
+              حجم: <span dir="ltr">{formatBytes(latest.file_size)}</span> · <Icon name="calendar" /> انتشار: {faDate(latest.published_at)}
             </p>
           </div>
           <a
             href={`/support/download/${latest.id}`}
             className="rounded-xl bg-brand hover:opacity-95 text-on-brand text-xs font-medium px-4 py-2.5 transition shadow-sm"
           >
-            📥 دانلود نسخه جدید
+            <Icon name="download" /> دانلود نسخه جدید
           </a>
         </section>
       )}
@@ -111,23 +112,23 @@ export default async function SupportAccountPage({
       <section className="bg-elevated rounded-2xl border border-subtle p-5 space-y-4 shadow-sm">
         <div className="flex flex-wrap items-center justify-between gap-2">
           <h2 className="font-semibold text-primary text-sm">
-            💻 دستگاه‌های فعال ({faNum(devices.length)} / {faNum(license.max_devices)})
+            <Icon name="device" /> دستگاه‌های فعال ({faNum(devices.length)} / {faNum(license.max_devices)})
           </h2>
           {!canReset && (
             <span className="text-xs text-zafaran-700 dark:text-zafaran-300">
-              ⏳ آزادسازی بعدی مجاز از: {faDate(new Date(nextResetMs), true)}
+              <Icon name="pending" /> آزادسازی بعدی مجاز از: {faDate(new Date(nextResetMs), true)}
             </span>
           )}
         </div>
 
         {devices.length === 0 ? (
-          <p className="text-sm text-tertiary">📭 هیچ دستگاه فعالی ثبت نشده است.</p>
+          <p className="text-sm text-tertiary"><Icon name="empty" /> هیچ دستگاه فعالی ثبت نشده است.</p>
         ) : (
           <div className="divide-y divide-subtle">
             {devices.map((d) => (
               <div key={d.id} className="py-3 flex flex-wrap items-center justify-between gap-3">
                 <div>
-                  <div className="text-sm font-medium text-primary">🖥️ {d.device_name || 'دستگاه بدون نام'}</div>
+                  <div className="text-sm font-medium text-primary"><Icon name="monitor" /> {d.device_name || 'دستگاه بدون نام'}</div>
                   <div className="text-xs text-tertiary font-mono" dir="ltr">
                     {d.os || '—'} · v{d.app_version || '—'} · آخرین تماس: {faDate(d.last_seen_at, true)}
                   </div>
@@ -139,7 +140,7 @@ export default async function SupportAccountPage({
                       type="submit"
                       className="rounded-lg border border-anar-500/30 bg-anar-500/10 hover:bg-anar-500/20 text-anar-700 dark:text-anar-300 text-xs px-3 py-1.5 cursor-pointer"
                     >
-                      🔓 آزادسازی دستگاه
+                      <Icon name="unlock" /> آزادسازی دستگاه
                     </button>
                   </form>
                 )}
@@ -151,13 +152,13 @@ export default async function SupportAccountPage({
 
       <section className="bg-elevated rounded-2xl border border-subtle p-5 space-y-4 shadow-sm">
         <div className="flex items-center justify-between">
-          <h2 className="font-semibold text-primary text-sm">🎫 تیکت‌های من</h2>
+          <h2 className="font-semibold text-primary text-sm"><Icon name="ticket" /> تیکت‌های من</h2>
           <Link href="/support/tickets/new" className="text-xs text-brand hover:underline font-medium">
-            ✉️ تیکت جدید
+            <Icon name="mail" /> تیکت جدید
           </Link>
         </div>
         {tickets.length === 0 ? (
-          <p className="text-sm text-tertiary">📭 هنوز تیکتی ثبت نکرده‌اید.</p>
+          <p className="text-sm text-tertiary"><Icon name="empty" /> هنوز تیکتی ثبت نکرده‌اید.</p>
         ) : (
           <div className="divide-y divide-subtle">
             {tickets.map((t) => (
@@ -166,7 +167,7 @@ export default async function SupportAccountPage({
                 href={`/support/t/${t.access_token}`}
                 className="py-2.5 flex items-center justify-between gap-3 hover:bg-muted px-2 rounded-xl transition"
               >
-                <span className="text-sm font-medium text-primary">💬 {t.subject}</span>
+                <span className="text-sm font-medium text-primary"><Icon name="message" /> {t.subject}</span>
                 <StatusBadge value={t.status} />
               </Link>
             ))}

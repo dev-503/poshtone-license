@@ -13,6 +13,7 @@ import {
   revokeActivationAction,
   updateLicenseAction,
 } from '../actions';
+import { Icon } from '@/components/Icon';
 
 export const dynamic = 'force-dynamic';
 
@@ -63,7 +64,7 @@ export default async function LicenseDetailPage({
     `🔑 کلید لایسنس: ${license.key}`,
     `🏷️ نوع: ${faStatus(license.type)}${license.expires_at ? ` · 📅 اعتبار تا: ${faDate(license.expires_at)}` : ''}`,
     `💻 تعداد دستگاه مجاز: ${license.max_devices}`,
-    `🛡️ پرتال مدیریت دستگاه و پشتیبانی: ${getAppBaseUrl()}/support`,
+    `پرتال مدیریت دستگاه و پشتیبانی: ${getAppBaseUrl()}/support`,
   ].join('\n');
 
   return (
@@ -71,7 +72,7 @@ export default async function LicenseDetailPage({
       <div className="flex flex-wrap items-center justify-between gap-3">
         <div className="flex items-center gap-3">
           <h1 className="text-xl font-bold text-primary font-mono" dir="ltr">
-            🔑 {license.key}
+            <Icon name="key" /> {license.key}
           </h1>
           <CopyButton text={license.key} label="کپی کلید" />
           <StatusBadge value={effectiveLicenseStatus(license)} />
@@ -83,19 +84,19 @@ export default async function LicenseDetailPage({
 
       {(sp.created || sp.ok) && (
         <div className="rounded-xl bg-pesteh-500/15 border border-pesteh-500/30 text-pesteh-700 dark:text-pesteh-300 text-sm px-4 py-3">
-          ✅ عملیات با موفقیت انجام شد.
+          <Icon name="ok" /> عملیات با موفقیت انجام شد.
         </div>
       )}
       {sp.error && (
         <div className="rounded-xl bg-anar-500/15 border border-anar-500/30 text-anar-700 dark:text-anar-300 text-sm px-4 py-3">
-          ❌ خطا: {sp.error}
+          <Icon name="error" /> خطا: {sp.error}
         </div>
       )}
 
       {sp.offline_token && (
         <div className="rounded-2xl bg-firoozeh-500/10 border border-firoozeh-500/30 p-5 space-y-2">
           <div className="flex items-center justify-between">
-            <span className="text-sm font-semibold text-primary">📄 توکن آفلاین (.lic) صادر شد</span>
+            <span className="text-sm font-semibold text-primary"><Icon name="note" /> توکن آفلاین (.lic) صادر شد</span>
             <CopyButton text={sp.offline_token} label="کپی توکن" />
           </div>
           <textarea
@@ -112,7 +113,7 @@ export default async function LicenseDetailPage({
         <div className="lg:col-span-2 space-y-6">
           <form action={updateLicenseAction} className="bg-elevated rounded-2xl border border-subtle p-5 space-y-4 shadow-sm">
             <input type="hidden" name="id" value={license.id} />
-            <h2 className="font-semibold text-primary">📝 اطلاعات لایسنس</h2>
+            <h2 className="font-semibold text-primary"><Icon name="note" /> اطلاعات لایسنس</h2>
             <div className="grid sm:grid-cols-2 gap-4">
               <div>
                 <label className="block text-xs text-secondary mb-1">نام مشتری</label>
@@ -173,7 +174,7 @@ export default async function LicenseDetailPage({
 
             {allowedFeatures.length > 0 && (
               <div>
-                <div className="text-xs text-secondary mb-2">🎛️ قابلیت‌های فعال</div>
+                <div className="text-xs text-secondary mb-2"><Icon name="sliders" /> قابلیت‌های فعال</div>
                 <div className="flex flex-wrap gap-2">
                   {allowedFeatures.map((f) => (
                     <label key={f} className="inline-flex items-center gap-2 text-xs bg-secondary border border-subtle px-2.5 py-1.5 rounded-lg cursor-pointer text-primary">
@@ -204,25 +205,25 @@ export default async function LicenseDetailPage({
               type="submit"
               className="rounded-xl bg-brand hover:opacity-95 text-on-brand text-sm font-medium px-5 py-2 cursor-pointer"
             >
-              💾 ذخیره تغییرات
+              <Icon name="save" /> ذخیره تغییرات
             </button>
           </form>
 
           <section className="bg-elevated rounded-2xl border border-subtle p-5 space-y-4 shadow-sm">
             <h2 className="font-semibold text-primary">
-              💻 دستگاه‌ها ({faNum(activeCount)} / {faNum(license.max_devices)})
+              <Icon name="device" /> دستگاه‌ها ({faNum(activeCount)} / {faNum(license.max_devices)})
             </h2>
             {acts.length === 0 ? (
-              <p className="text-sm text-tertiary">📭 هنوز دستگاهی فعال‌سازی نشده است.</p>
+              <p className="text-sm text-tertiary"><Icon name="empty" /> هنوز دستگاهی فعال‌سازی نشده است.</p>
             ) : (
               <div className="divide-y divide-subtle">
                 {acts.map((a) => (
                   <div key={a.id} className="py-3 flex flex-wrap items-center justify-between gap-3">
                     <div className="min-w-0">
                       <div className="text-sm font-medium text-primary">
-                        🖥️ {a.device_name || 'دستگاه بدون نام'}
+                        <Icon name="monitor" /> {a.device_name || 'دستگاه بدون نام'}
                         {a.revoked_at && (
-                          <span className="ms-2 text-xs text-anar-600 dark:text-anar-400">(🚫 لغوشده)</span>
+                          <span className="ms-2 text-xs text-anar-600 dark:text-anar-400">(<Icon name="ban" /> لغوشده)</span>
                         )}
                       </div>
                       <div className="text-xs text-tertiary font-mono truncate" dir="ltr">
@@ -237,7 +238,7 @@ export default async function LicenseDetailPage({
                           type="submit"
                           className="rounded-lg border border-anar-500/30 bg-anar-500/10 hover:bg-anar-500/20 text-anar-700 dark:text-anar-300 text-xs px-3 py-1.5 cursor-pointer"
                         >
-                          🔓 آزادسازی دستگاه
+                          <Icon name="unlock" /> آزادسازی دستگاه
                         </button>
                       </form>
                     )}
@@ -250,12 +251,12 @@ export default async function LicenseDetailPage({
 
         <div className="space-y-6">
           <section className="bg-elevated rounded-2xl border border-subtle p-5 space-y-4 shadow-sm">
-            <h2 className="font-semibold text-primary">⚙️ وضعیت و تمدید</h2>
+            <h2 className="font-semibold text-primary"><Icon name="settings" /> وضعیت و تمدید</h2>
             <div className="text-xs text-secondary space-y-1.5">
-              <div>📦 محصول: <strong className="text-primary">{license.product.name}</strong></div>
-              <div>🏷️ نوع: <strong className="text-primary">{faStatus(license.type)}</strong></div>
-              <div>📅 انقضا: <strong className="text-primary">{license.type === 'perpetual' ? '♾️ نامحدود' : faDate(license.expires_at)}</strong></div>
-              <div>🕒 آخرین اعتبارسنجی: <strong className="text-primary">{faDate(license.last_validated_at, true)}</strong></div>
+              <div><Icon name="package" /> محصول: <strong className="text-primary">{license.product.name}</strong></div>
+              <div><Icon name="tag" /> نوع: <strong className="text-primary">{faStatus(license.type)}</strong></div>
+              <div><Icon name="calendar" /> انقضا: <strong className="text-primary">{license.type === 'perpetual' ? 'نامحدود' : faDate(license.expires_at)}</strong></div>
+              <div><Icon name="clock" /> آخرین اعتبارسنجی: <strong className="text-primary">{faDate(license.last_validated_at, true)}</strong></div>
             </div>
 
             <div className="flex flex-wrap gap-2 pt-2">
@@ -294,7 +295,7 @@ export default async function LicenseDetailPage({
                   type="submit"
                   className="rounded-xl bg-brand text-on-brand text-xs font-medium px-3 py-2 cursor-pointer"
                 >
-                  ⏳ تمدید (روز)
+                  <Icon name="pending" /> تمدید (روز)
                 </button>
               </form>
             )}
@@ -302,7 +303,7 @@ export default async function LicenseDetailPage({
 
           <section className="bg-elevated rounded-2xl border border-subtle p-5 space-y-3 shadow-sm">
             <div className="flex items-center justify-between">
-              <h2 className="font-semibold text-primary">💬 پیام آماده برای مشتری</h2>
+              <h2 className="font-semibold text-primary"><Icon name="message" /> پیام آماده برای مشتری</h2>
               <CopyButton text={customerMsg} label="کپی پیام" />
             </div>
             <pre className="text-xs bg-secondary border border-subtle rounded-xl p-3 whitespace-pre-wrap leading-relaxed text-secondary">
@@ -312,7 +313,7 @@ export default async function LicenseDetailPage({
 
           <form action={generateOfflineTokenAction} className="bg-elevated rounded-2xl border border-subtle p-5 space-y-3 shadow-sm">
             <input type="hidden" name="id" value={license.id} />
-            <h2 className="font-semibold text-primary">📄 صدور فایل لایسنس آفلاین</h2>
+            <h2 className="font-semibold text-primary"><Icon name="note" /> صدور فایل لایسنس آفلاین</h2>
             <div>
               <label className="block text-xs text-secondary mb-1">شناسه دستگاه (Device ID)</label>
               <input
@@ -339,13 +340,13 @@ export default async function LicenseDetailPage({
               type="submit"
               className="w-full rounded-xl bg-brand hover:opacity-95 text-on-brand text-xs font-medium py-2 cursor-pointer"
             >
-              🔏 ساخت توکن آفلاین
+              <Icon name="fileKey" /> ساخت توکن آفلاین
             </button>
           </form>
 
           {tickets && tickets.length > 0 && (
             <section className="bg-elevated rounded-2xl border border-subtle p-5 space-y-3 shadow-sm">
-              <h2 className="font-semibold text-primary">🎫 تیکت‌های مرتبط</h2>
+              <h2 className="font-semibold text-primary"><Icon name="ticket" /> تیکت‌های مرتبط</h2>
               <div className="space-y-2">
                 {(tickets as Ticket[]).map((t) => (
                   <Link
