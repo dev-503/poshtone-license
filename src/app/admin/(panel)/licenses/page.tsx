@@ -3,6 +3,7 @@ import { requireAdmin } from '@/lib/admin-auth';
 import { effectiveLicenseStatus, faDate, faNum } from '@/lib/fa';
 import { StatusBadge } from '@/components/StatusBadge';
 import type { License } from '@/types/database';
+import { Icon } from '@/components/Icon';
 
 export const dynamic = 'force-dynamic';
 
@@ -52,14 +53,14 @@ export default async function LicensesPage({
     <div className="space-y-6">
       <div className="flex flex-wrap items-center justify-between gap-3">
         <h1 className="text-xl font-bold text-primary flex items-center gap-2">
-          <span>🔑</span>
+          <Icon name="key" />
           <span>لایسنس‌ها</span>
         </h1>
         <Link
           href="/admin/licenses/create"
           className="rounded-xl bg-brand hover:opacity-95 text-on-brand text-sm font-medium px-4 py-2 transition shadow-sm"
         >
-          ✨ صدور لایسنس جدید
+          <Icon name="magic" /> صدور لایسنس جدید
         </Link>
       </div>
 
@@ -67,7 +68,7 @@ export default async function LicensesPage({
         <input
           name="q"
           defaultValue={sp.q ?? ''}
-          placeholder="🔍 کلید، نام، موبایل، سفارش..."
+          placeholder="کلید، نام، موبایل، سفارش..."
           className="rounded-xl border border-input bg-primary text-primary px-3 py-2 text-sm"
         />
         <select
@@ -75,7 +76,7 @@ export default async function LicensesPage({
           defaultValue={sp.product ?? ''}
           className="rounded-xl border border-input bg-primary text-primary px-3 py-2 text-sm"
         >
-          <option value="">📦 همه محصولات</option>
+          <option value="">همه محصولات</option>
           {(products ?? []).map((p) => (
             <option key={p.id} value={p.id}>
               {p.name}
@@ -87,27 +88,27 @@ export default async function LicensesPage({
           defaultValue={sp.type ?? ''}
           className="rounded-xl border border-input bg-primary text-primary px-3 py-2 text-sm"
         >
-          <option value="">🏷️ همه انواع</option>
-          <option value="subscription">📅 اشتراکی</option>
-          <option value="perpetual">♾️ دائمی</option>
-          <option value="trial">🧪 آزمایشی</option>
+          <option value="">همه انواع</option>
+          <option value="subscription">اشتراکی</option>
+          <option value="perpetual">دائمی</option>
+          <option value="trial">آزمایشی</option>
         </select>
         <select
           name="status"
           defaultValue={sp.status ?? ''}
           className="rounded-xl border border-input bg-primary text-primary px-3 py-2 text-sm"
         >
-          <option value="">⚡ همه وضعیت‌ها</option>
-          <option value="active">✅ فعال</option>
-          <option value="expired">⌛ منقضی</option>
-          <option value="suspended">⏸️ معلق</option>
-          <option value="revoked">🚫 باطل‌شده</option>
+          <option value="">همه وضعیت‌ها</option>
+          <option value="active">فعال</option>
+          <option value="expired">منقضی</option>
+          <option value="suspended">معلق</option>
+          <option value="revoked">باطل‌شده</option>
         </select>
         <button
           type="submit"
           className="rounded-xl bg-brand hover:opacity-95 text-on-brand text-sm font-medium px-4 py-2 cursor-pointer"
         >
-          🔎 فیلتر
+          <Icon name="search" /> فیلتر
         </button>
       </form>
 
@@ -129,7 +130,7 @@ export default async function LicensesPage({
               {rows.length === 0 ? (
                 <tr>
                   <td colSpan={7} className="py-8 text-center text-tertiary">
-                    📭 لایسنسی یافت نشد.
+                    <Icon name="empty" /> لایسنسی یافت نشد.
                   </td>
                 </tr>
               ) : (
@@ -147,7 +148,7 @@ export default async function LicensesPage({
                         </Link>
                       </td>
                       <td className="py-3 px-4">
-                        <div className="font-medium text-primary">👤 {lic.customer_name}</div>
+                        <div className="font-medium text-primary"><Icon name="user" /> {lic.customer_name}</div>
                         <div className="text-xs text-tertiary" dir="ltr">
                           {lic.customer_phone || lic.customer_email || '—'}
                         </div>
@@ -157,10 +158,10 @@ export default async function LicensesPage({
                         <StatusBadge value={lic.type} />
                       </td>
                       <td className="py-3 px-4 text-secondary">
-                        💻 {faNum(activeDevices)} / {faNum(lic.max_devices)}
+                        <Icon name="device" /> {faNum(activeDevices)} / {faNum(lic.max_devices)}
                       </td>
                       <td className="py-3 px-4 text-secondary">
-                        {lic.type === 'perpetual' ? '♾️ نامحدود' : faDate(lic.expires_at)}
+                        {lic.type === 'perpetual' ? 'نامحدود' : faDate(lic.expires_at)}
                       </td>
                       <td className="py-3 px-4">
                         <StatusBadge value={effectiveLicenseStatus(lic)} />

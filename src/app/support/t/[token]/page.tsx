@@ -4,6 +4,7 @@ import { createAdminClient } from '@/lib/supabase/admin';
 import { StatusBadge } from '@/components/StatusBadge';
 import type { Ticket, TicketMessage } from '@/types/database';
 import { portalReplyTicketAction } from '../../actions';
+import { Icon } from '@/components/Icon';
 
 export const dynamic = 'force-dynamic';
 
@@ -41,21 +42,21 @@ export default async function SupportTicketShowPage({
       <div className="bg-elevated rounded-2xl border border-subtle p-5 flex items-center justify-between gap-3 shadow-sm">
         <div>
           <h1 className="font-bold text-primary">
-            🎫 تیکت #{ticket.id}: {ticket.subject}
+            <Icon name="ticket" /> تیکت #{ticket.id}: {ticket.subject}
           </h1>
-          <div className="text-xs text-tertiary mt-1">📅 ثبت‌شده در {faDate(ticket.created_at, true)}</div>
+          <div className="text-xs text-tertiary mt-1"><Icon name="calendar" /> ثبت‌شده در {faDate(ticket.created_at, true)}</div>
         </div>
         <StatusBadge value={ticket.status} />
       </div>
 
       {sp.created && (
         <div className="rounded-xl bg-pesteh-500/15 border border-pesteh-500/30 text-pesteh-700 dark:text-pesteh-300 text-xs px-4 py-3 leading-relaxed">
-          ✅ تیکت ثبت شد. این صفحه را نگه دارید (یا لینک آن را ذخیره کنید)؛ پاسخ پشتیبانی همین‌جا نمایش داده می‌شود.
+          <Icon name="ok" /> تیکت ثبت شد. این صفحه را نگه دارید (یا لینک آن را ذخیره کنید)؛ پاسخ پشتیبانی همین‌جا نمایش داده می‌شود.
         </div>
       )}
       {sp.ok && (
         <div className="rounded-xl bg-pesteh-500/15 border border-pesteh-500/30 text-pesteh-700 dark:text-pesteh-300 text-xs px-4 py-3">
-          ✅ پیام شما ارسال شد.
+          <Icon name="ok" /> پیام شما ارسال شد.
         </div>
       )}
 
@@ -71,7 +72,7 @@ export default async function SupportTicketShowPage({
           >
             <div className="flex items-center justify-between text-xs text-tertiary">
               <span className="font-semibold text-primary">
-                {m.author_type === 'staff' ? '🎧 پشتیبانی' : `👤 ${m.author_name || faStatus(m.author_type)}`}
+                {m.author_type === 'staff' ? 'پشتیبانی' : `${m.author_name || faStatus(m.author_type)}`}
               </span>
               <span>{faDate(m.created_at, true)}</span>
             </div>
@@ -86,14 +87,14 @@ export default async function SupportTicketShowPage({
           name="body"
           required
           rows={4}
-          placeholder="✍️ پاسخ خود را بنویسید..."
+          placeholder="پاسخ خود را بنویسید..."
           className="w-full rounded-xl border border-input bg-primary text-primary px-3 py-2 text-sm"
         />
         <button
           type="submit"
           className="rounded-xl bg-brand hover:opacity-95 text-on-brand text-sm font-medium px-5 py-2 cursor-pointer"
         >
-          📤 ارسال پیام
+          <Icon name="upload" /> ارسال پیام
         </button>
       </form>
     </div>

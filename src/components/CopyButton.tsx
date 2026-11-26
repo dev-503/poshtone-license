@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { Icon } from '@/components/Icon';
 
 export function CopyButton({
   text,
@@ -29,7 +30,7 @@ export function CopyButton({
       onClick={onCopy}
       className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium border border-subtle bg-elevated hover:bg-muted text-primary transition cursor-pointer ${className}`}
     >
-      <span>{copied ? '✅' : '📋'}</span>
+      <Icon name={copied ? 'ok' : 'list'} />
       <span>{copied ? 'کپی شد' : label}</span>
     </button>
   );

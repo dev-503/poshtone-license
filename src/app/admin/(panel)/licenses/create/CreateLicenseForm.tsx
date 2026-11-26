@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import type { Product } from '@/types/database';
 import { createLicensesAction } from '../actions';
+import { Icon } from '@/components/Icon';
 
 export function CreateLicenseForm({ products }: { products: Product[] }) {
   const [productId, setProductId] = useState<number>(products[0]?.id ?? 0);
@@ -16,7 +17,7 @@ export function CreateLicenseForm({ products }: { products: Product[] }) {
     <form action={createLicensesAction} className="bg-elevated rounded-2xl border border-subtle p-6 space-y-5 max-w-2xl shadow-sm">
       <div className="grid sm:grid-cols-2 gap-4">
         <div>
-          <label className="block text-xs font-medium text-secondary mb-1">📦 محصول</label>
+          <label className="block text-xs font-medium text-secondary mb-1"><Icon name="package" /> محصول</label>
           <select
             name="product_id"
             required
@@ -32,22 +33,22 @@ export function CreateLicenseForm({ products }: { products: Product[] }) {
           </select>
         </div>
         <div>
-          <label className="block text-xs font-medium text-secondary mb-1">🏷️ نوع لایسنس</label>
+          <label className="block text-xs font-medium text-secondary mb-1"><Icon name="tag" /> نوع لایسنس</label>
           <select
             name="type"
             value={type}
             onChange={(e) => setType(e.target.value as 'subscription' | 'perpetual')}
             className="w-full rounded-xl border border-input bg-primary text-primary px-3 py-2.5 text-sm"
           >
-            <option value="subscription">📅 اشتراکی (مدت‌دار)</option>
-            <option value="perpetual">♾️ دائمی</option>
+            <option value="subscription">اشتراکی (مدت‌دار)</option>
+            <option value="perpetual">دائمی</option>
           </select>
         </div>
       </div>
 
       {type === 'subscription' && (
         <div className="rounded-xl bg-secondary border border-subtle p-4 space-y-3">
-          <div className="text-xs font-medium text-primary">⏳ مدت اعتبار</div>
+          <div className="text-xs font-medium text-primary"><Icon name="pending" /> مدت اعتبار</div>
           <div className="flex flex-wrap gap-2">
             {[
               { label: '۱ ماه', days: '30' },
@@ -98,7 +99,7 @@ export function CreateLicenseForm({ products }: { products: Product[] }) {
 
       <div className="grid sm:grid-cols-2 gap-4">
         <div>
-          <label className="block text-xs font-medium text-secondary mb-1">👤 نام مشتری *</label>
+          <label className="block text-xs font-medium text-secondary mb-1"><Icon name="user" /> نام مشتری *</label>
           <input
             name="customer_name"
             required
@@ -107,7 +108,7 @@ export function CreateLicenseForm({ products }: { products: Product[] }) {
           />
         </div>
         <div>
-          <label className="block text-xs font-medium text-secondary mb-1">📱 شماره موبایل</label>
+          <label className="block text-xs font-medium text-secondary mb-1"><Icon name="phone" /> شماره موبایل</label>
           <input
             name="customer_phone"
             dir="ltr"
@@ -116,7 +117,7 @@ export function CreateLicenseForm({ products }: { products: Product[] }) {
           />
         </div>
         <div>
-          <label className="block text-xs font-medium text-secondary mb-1">📧 ایمیل</label>
+          <label className="block text-xs font-medium text-secondary mb-1"><Icon name="mail" /> ایمیل</label>
           <input
             name="customer_email"
             type="email"
@@ -126,7 +127,7 @@ export function CreateLicenseForm({ products }: { products: Product[] }) {
         </div>
         <div>
           <label className="block text-xs font-medium text-secondary mb-1">
-            💻 سقف دستگاه (پیش‌فرض: {selectedProduct?.default_max_devices ?? 1})
+            <Icon name="device" /> سقف دستگاه (پیش‌فرض: {selectedProduct?.default_max_devices ?? 1})
           </label>
           <input
             name="max_devices"
@@ -140,15 +141,15 @@ export function CreateLicenseForm({ products }: { products: Product[] }) {
 
       <div className="grid sm:grid-cols-3 gap-4">
         <div>
-          <label className="block text-xs font-medium text-secondary mb-1">💎 پلن (اختیاری)</label>
+          <label className="block text-xs font-medium text-secondary mb-1"><Icon name="gem" /> پلن (اختیاری)</label>
           <input name="plan" placeholder="Pro" className="w-full rounded-xl border border-input bg-primary text-primary px-3 py-2 text-sm" />
         </div>
         <div>
-          <label className="block text-xs font-medium text-secondary mb-1">🧾 شناسه سفارش</label>
+          <label className="block text-xs font-medium text-secondary mb-1"><Icon name="receipt" /> شناسه سفارش</label>
           <input name="order_ref" dir="ltr" className="w-full rounded-xl border border-input bg-primary text-primary px-3 py-2 text-sm" />
         </div>
         <div>
-          <label className="block text-xs font-medium text-secondary mb-1">🔢 تعداد (صدور دسته‌ای)</label>
+          <label className="block text-xs font-medium text-secondary mb-1"><Icon name="hash" /> تعداد (صدور دسته‌ای)</label>
           <input
             name="quantity"
             type="number"
@@ -162,7 +163,7 @@ export function CreateLicenseForm({ products }: { products: Product[] }) {
 
       {features.length > 0 && (
         <div>
-          <div className="text-xs font-medium text-secondary mb-2">🎛️ قابلیت‌های فعال (Entitlements)</div>
+          <div className="text-xs font-medium text-secondary mb-2"><Icon name="sliders" /> قابلیت‌های فعال (Entitlements)</div>
           <div className="flex flex-wrap gap-3">
             {features.map((f) => (
               <label key={f} className="inline-flex items-center gap-2 text-sm bg-secondary border border-subtle px-3 py-1.5 rounded-lg cursor-pointer text-primary">
@@ -175,7 +176,7 @@ export function CreateLicenseForm({ products }: { products: Product[] }) {
       )}
 
       <div>
-        <label className="block text-xs font-medium text-secondary mb-1">📝 یادداشت داخلی</label>
+        <label className="block text-xs font-medium text-secondary mb-1"><Icon name="note" /> یادداشت داخلی</label>
         <textarea name="notes" rows={2} className="w-full rounded-xl border border-input bg-primary text-primary px-3 py-2 text-sm" />
       </div>
 
@@ -183,7 +184,7 @@ export function CreateLicenseForm({ products }: { products: Product[] }) {
         type="submit"
         className="rounded-xl bg-brand hover:opacity-95 text-on-brand font-medium px-6 py-2.5 text-sm transition cursor-pointer shadow-sm"
       >
-        ✨ صدور لایسنس
+        <Icon name="magic" /> صدور لایسنس
       </button>
     </form>
   );

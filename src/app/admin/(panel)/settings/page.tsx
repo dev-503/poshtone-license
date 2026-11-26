@@ -4,6 +4,7 @@ import { getAppSettings } from '@/lib/settings';
 import { getStorageBackend } from '@/lib/storage';
 import { CopyButton } from '@/components/CopyButton';
 import { saveSettingsAction } from './actions';
+import { Icon } from '@/components/Icon';
 
 export const dynamic = 'force-dynamic';
 
@@ -21,25 +22,25 @@ export default async function SettingsPage({
   return (
     <div className="space-y-6">
       <h1 className="text-xl font-bold text-primary flex items-center gap-2">
-        <span>⚙️</span>
+        <Icon name="settings" />
         <span>تنظیمات سامانه</span>
       </h1>
 
       {sp.ok && (
         <div className="rounded-xl bg-pesteh-500/15 border border-pesteh-500/30 text-pesteh-700 dark:text-pesteh-300 text-sm px-4 py-3">
-          ✅ تنظیمات با موفقیت ذخیره شد.
+          <Icon name="ok" /> تنظیمات با موفقیت ذخیره شد.
         </div>
       )}
       {sp.error && (
         <div className="rounded-xl bg-anar-500/15 border border-anar-500/30 text-anar-700 dark:text-anar-300 text-sm px-4 py-3">
-          ❌ خطا: {sp.error}
+          <Icon name="error" /> خطا: {sp.error}
         </div>
       )}
 
       <div className="grid lg:grid-cols-2 gap-6">
         <form action={saveSettingsAction} className="bg-elevated rounded-2xl border border-subtle p-6 space-y-4 shadow-sm">
           <h2 className="font-semibold text-primary flex items-center gap-2">
-            <span>🧾</span>
+            <Icon name="receipt" />
             <span>API سامانه مودیان</span>
           </h2>
           <p className="text-xs text-tertiary leading-relaxed">
@@ -47,7 +48,7 @@ export default async function SettingsPage({
           </p>
 
           <div>
-            <label className="block text-xs font-medium text-secondary mb-1">🌐 آدرس API مودیان</label>
+            <label className="block text-xs font-medium text-secondary mb-1"><Icon name="globe" /> آدرس API مودیان</label>
             <input
               name="moadian_api_url"
               type="url"
@@ -60,7 +61,7 @@ export default async function SettingsPage({
           </div>
 
           <div>
-            <label className="block text-xs font-medium text-secondary mb-1">🔑 کلید API مودیان (اختیاری)</label>
+            <label className="block text-xs font-medium text-secondary mb-1"><Icon name="key" /> کلید API مودیان (اختیاری)</label>
             <input
               name="moadian_api_key"
               type="password"
@@ -73,21 +74,21 @@ export default async function SettingsPage({
 
           <label className="flex items-center gap-2 text-sm text-primary cursor-pointer">
             <input type="checkbox" name="moadian_enabled" defaultChecked={settings.moadian_enabled} />
-            ✅ اتصال سامانه مودیان فعال باشد
+            <Icon name="ok" /> اتصال سامانه مودیان فعال باشد
           </label>
 
           <button
             type="submit"
             className="rounded-xl bg-brand hover:opacity-95 text-on-brand font-medium px-6 py-2.5 text-sm cursor-pointer shadow-sm"
           >
-            💾 ذخیره تنظیمات
+            <Icon name="save" /> ذخیره تنظیمات
           </button>
         </form>
 
         <div className="space-y-6">
           <section className="bg-elevated rounded-2xl border border-subtle p-6 space-y-3 shadow-sm">
             <div className="flex items-center justify-between">
-              <h2 className="font-semibold text-primary text-sm">📡 اندپوینت دریافت تنظیمات برای کلاینت‌ها</h2>
+              <h2 className="font-semibold text-primary text-sm"><Icon name="signal" /> اندپوینت دریافت تنظیمات برای کلاینت‌ها</h2>
               <CopyButton text={configEndpoint} label="کپی آدرس" />
             </div>
             <div className="font-mono text-xs bg-secondary border border-subtle rounded-xl p-3 text-primary" dir="ltr">
@@ -99,11 +100,11 @@ export default async function SettingsPage({
           </section>
 
           <section className="bg-elevated rounded-2xl border border-subtle p-6 space-y-2 shadow-sm text-xs text-secondary">
-            <h2 className="font-semibold text-primary text-sm mb-2">☁️ فضای ذخیره‌سازی آپدیت‌ها</h2>
+            <h2 className="font-semibold text-primary text-sm mb-2"><Icon name="cloud" /> فضای ذخیره‌سازی آپدیت‌ها</h2>
             <div>
               سرویس فعال فعلی:{' '}
               <strong className="text-primary">
-                {storage === 's3' ? '🟠 Arvan Cloud S3' : '🟢 Supabase Storage (باکت releases)'}
+                {storage === 's3' ? 'Arvan Cloud S3' : 'Supabase Storage (باکت releases)'}
               </strong>
             </div>
             <div className="text-tertiary">

@@ -3,19 +3,21 @@
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import { createClient } from '@/lib/supabase/client';
+import { Icon, type IconName } from '@/components/Icon';
 import { ThemeToggle } from './ThemeToggle';
+import { Icon } from '@/components/Icon';
 
 const NAV = [
-  { href: '/admin', label: 'داشبورد', emoji: '🏛️', exact: true },
-  { href: '/admin/products', label: 'محصولات', emoji: '📦' },
-  { href: '/admin/licenses', label: 'لایسنس‌ها', emoji: '🔑' },
-  { href: '/admin/releases', label: 'نسخه‌ها و آپدیت', emoji: '🚀' },
-  { href: '/admin/tickets', label: 'تیکت‌ها', emoji: '🎫' },
-  { href: '/admin/analytics', label: 'آنالیتیکس', emoji: '📊' },
-  { href: '/admin/api-keys', label: 'کلیدهای API', emoji: '🔐' },
-  { href: '/admin/audit', label: 'گزارش ممیزی', emoji: '📜' },
-  { href: '/admin/ai-guide', label: 'دستورالعمل AI', emoji: '🤖' },
-  { href: '/admin/settings', label: 'تنظیمات', emoji: '⚙️' },
+  { href: '/admin', label: 'داشبورد', icon: 'home' as IconName, exact: true },
+  { href: '/admin/products', label: 'محصولات', icon: 'package' as IconName },
+  { href: '/admin/licenses', label: 'لایسنس‌ها', icon: 'key' as IconName },
+  { href: '/admin/releases', label: 'نسخه‌ها و آپدیت', icon: 'rocket' as IconName },
+  { href: '/admin/tickets', label: 'تیکت‌ها', icon: 'ticket' as IconName },
+  { href: '/admin/analytics', label: 'آنالیتیکس', icon: 'chart' as IconName },
+  { href: '/admin/api-keys', label: 'کلیدهای API', icon: 'secret' as IconName },
+  { href: '/admin/audit', label: 'گزارش ممیزی', icon: 'log' as IconName },
+  { href: '/admin/ai-guide', label: 'دستورالعمل AI', icon: 'bot' as IconName },
+  { href: '/admin/settings', label: 'تنظیمات', icon: 'settings' as IconName },
 ];
 
 export function AdminShell({
@@ -41,7 +43,7 @@ export function AdminShell({
         <div className="p-5 border-b border-subtle flex items-center justify-between gap-2">
           <Link href="/admin" className="flex items-center gap-2.5 font-bold text-base text-primary">
             <span className="w-9 h-9 rounded-xl bg-brand text-on-brand flex items-center justify-center text-lg shadow-sm">
-              🏺
+              <Icon name="brand" size="1.3em" />
             </span>
             <div>
               <div>License Hub</div>
@@ -65,7 +67,7 @@ export function AdminShell({
                     : 'text-secondary hover:bg-muted hover:text-primary'
                 }`}
               >
-                <span className="text-base leading-none">{item.emoji}</span>
+                <Icon name={item.icon} size="1.2em" />
                 <span>{item.label}</span>
               </Link>
             );
@@ -80,19 +82,18 @@ export function AdminShell({
               target="_blank"
               className="inline-flex items-center gap-1 px-2.5 py-1.5 rounded-lg border border-subtle bg-elevated hover:bg-muted text-secondary hover:text-primary transition"
             >
-              <span>🛡️ پرتال</span>
-              <span>↗️</span>
+              <span><Icon name="shield" /> پرتال</span>
             </Link>
           </div>
           <div className="text-tertiary truncate px-1" dir="ltr" title={userEmail}>
-            👤 {userEmail}
+            <Icon name="user" /> {userEmail}
           </div>
           <button
             type="button"
             onClick={handleLogout}
             className="w-full flex items-center justify-center gap-2 px-3 py-2 rounded-xl border border-anar-500/30 bg-anar-500/10 hover:bg-anar-500/20 text-anar-700 dark:text-anar-300 font-medium transition cursor-pointer"
           >
-            <span>🚪</span>
+            <Icon name="logout" />
             <span>خروج از حساب</span>
           </button>
         </div>

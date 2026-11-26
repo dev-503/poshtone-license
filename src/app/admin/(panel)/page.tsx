@@ -1,8 +1,10 @@
 import Link from 'next/link';
 import { requireAdmin } from '@/lib/admin-auth';
 import { faDate, faNum } from '@/lib/fa';
+import { getAnalyticsOverview } from '@/lib/analytics';
 import { StatusBadge } from '@/components/StatusBadge';
 import type { License, Product, Ticket } from '@/types/database';
+import { Icon, type IconName } from '@/components/Icon';
 
 export const dynamic = 'force-dynamic';
 
@@ -14,7 +16,6 @@ export default async function AdminDashboardPage() {
   const [
     { count: productsCount },
     { count: activeLicensesCount },
-    { count: activeDevicesCount },
     { count: openTicketsCount },
     { data: expiringSoon },
     { data: recentTickets },
@@ -25,7 +26,6 @@ export default async function AdminDashboardPage() {
       .select('*', { count: 'exact', head: true })
       .eq('status', 'active')
       .or(`type.eq.perpetual,expires_at.gt.${nowIso}`),
-    admin.from('activations').select('*', { count: 'exact', head: true }).is('revoked_at', null),
     admin.from('tickets').select('*', { count: 'exact', head: true }).in('status', ['open', 'pending']),
     admin
       .from('licenses')
@@ -44,18 +44,21 @@ export default async function AdminDashboardPage() {
       .limit(8),
   ]);
 
+  const overview = await getAnalyticsOverview(admin, 30);
+  const activeDevicesCount = overview?.devices.active ?? 0;
+
   const stats = [
-    { label: 'محصولات فعال', emoji: '📦', value: faNum(productsCount ?? 0), href: '/admin/products', accent: 'bg-firoozeh-500/15 text-firoozeh-700 dark:text-firoozeh-300' },
-    { label: 'لایسنس‌های معتبر', emoji: '🔑', value: faNum(activeLicensesCount ?? 0), href: '/admin/licenses', accent: 'bg-pesteh-500/15 text-pesteh-700 dark:text-pesteh-300' },
-    { label: 'دستگاه‌های فعال', emoji: '💻', value: faNum(activeDevicesCount ?? 0), href: '/admin/analytics', accent: 'bg-lajvard-500/15 text-lajvard-700 dark:text-lajvard-300' },
-    { label: 'تیکت‌های باز', emoji: '🎫', value: faNum(openTicketsCount ?? 0), href: '/admin/tickets', accent: 'bg-zafaran-500/15 text-zafaran-700 dark:text-zafaran-300' },
+    { label: 'محصولات فعال', icon: 'package' as IconName, value: faNum(productsCount ?? 0), href: '/admin/products', accent: 'bg-firoozeh-500/15 text-firoozeh-700 dark:text-firoozeh-300' },
+    { label: 'لایسنس‌های معتبر', icon: 'key' as IconName, value: faNum(activeLicensesCount ?? 0), href: '/admin/licenses', accent: 'bg-pesteh-500/15 text-pesteh-700 dark:text-pesteh-300' },
+    { label: 'دستگاه‌های فعال (۳۰ روز)', icon: 'device' as IconName, value: faNum(activeDevicesCount ?? 0), href: '/admin/analytics', accent: 'bg-lajvard-500/15 text-lajvard-700 dark:text-lajvard-300' },
+    { label: 'تیکت‌های باز', icon: 'ticket' as IconName, value: faNum(openTicketsCount ?? 0), href: '/admin/tickets', accent: 'bg-zafaran-500/15 text-zafaran-700 dark:text-zafaran-300' },
   ];
 
   return (
     <div className="space-y-6">
       <div className="flex flex-wrap items-center justify-between gap-3">
         <h1 className="text-xl font-bold text-primary flex items-center gap-2">
-          <span>🏛️</span>
+          <Icon name="home" />
           <span>داشبورد مدیریت</span>
         </h1>
         <div className="flex items-center gap-2">
@@ -63,13 +66,13 @@ export default async function AdminDashboardPage() {
             href="/admin/licenses/create"
             className="rounded-xl bg-brand hover:opacity-95 text-on-brand text-sm font-medium px-4 py-2 transition shadow-sm"
           >
-            ✨ صدور لایسنس جدید
+            <Icon name="magic" /> صدور لایسنس جدید
           </Link>
           <Link
             href="/admin/releases/create"
             className="rounded-xl bg-elevated border border-subtle hover:bg-muted text-primary text-sm font-medium px-4 py-2 transition"
           >
-            🚀 انتشار نسخه
+            <Icon name="rocket" /> انتشار نسخه
           </Link>
         </div>
       </div>
@@ -86,7 +89,7 @@ export default async function AdminDashboardPage() {
               <div className="text-2xl font-bold text-primary mt-1">{s.value}</div>
             </div>
             <span className={`w-11 h-11 rounded-xl flex items-center justify-center text-xl ${s.accent}`}>
-              {s.emoji}
+              <Icon name={s.icon} size="1.3em" />
             </span>
           </Link>
         ))}
@@ -96,7 +99,7 @@ export default async function AdminDashboardPage() {
         <section className="bg-elevated rounded-2xl border border-subtle p-5 space-y-4 shadow-sm">
           <div className="flex items-center justify-between">
             <h2 className="font-semibold text-primary flex items-center gap-2">
-              <span>⏰</span>
+              <Icon name="alarm" />
               <span>لایسنس‌های رو به انقضا (۱۴ روز آینده)</span>
             </h2>
             <Link href="/admin/licenses" className="text-xs text-brand hover:underline font-medium">
@@ -104,7 +107,7 @@ export default async function AdminDashboardPage() {
             </Link>
           </div>
           {!expiringSoon || expiringSoon.length === 0 ? (
-            <p className="text-sm text-tertiary py-4">🎉 لایسنسی در ۱۴ روز آینده منقضی نمی‌شود.</p>
+            <p className="text-sm text-tertiary py-4"><Icon name="party" /> لایسنسی در ۱۴ روز آینده منقضی نمی‌شود.</p>
           ) : (
             <div className="divide-y divide-subtle">
               {(expiringSoon as (License & { product?: Pick<Product, 'name'> })[]).map((lic) => (
@@ -114,13 +117,13 @@ export default async function AdminDashboardPage() {
                   className="py-2.5 flex items-center justify-between gap-3 hover:bg-muted px-2 rounded-xl transition"
                 >
                   <div className="min-w-0">
-                    <div className="text-sm font-medium text-primary truncate">👤 {lic.customer_name}</div>
+                    <div className="text-sm font-medium text-primary truncate"><Icon name="user" /> {lic.customer_name}</div>
                     <div className="text-xs text-tertiary font-mono" dir="ltr">
                       {lic.key} · {lic.product?.name}
                     </div>
                   </div>
                   <span className="text-xs font-medium text-zafaran-700 dark:text-zafaran-300 bg-zafaran-500/15 border border-zafaran-500/30 px-2.5 py-1 rounded-lg shrink-0">
-                    📅 {faDate(lic.expires_at)}
+                    <Icon name="calendar" /> {faDate(lic.expires_at)}
                   </span>
                 </Link>
               ))}
@@ -131,7 +134,7 @@ export default async function AdminDashboardPage() {
         <section className="bg-elevated rounded-2xl border border-subtle p-5 space-y-4 shadow-sm">
           <div className="flex items-center justify-between">
             <h2 className="font-semibold text-primary flex items-center gap-2">
-              <span>🎫</span>
+              <Icon name="ticket" />
               <span>تیکت‌های باز و در انتظار</span>
             </h2>
             <Link href="/admin/tickets" className="text-xs text-brand hover:underline font-medium">
@@ -139,7 +142,7 @@ export default async function AdminDashboardPage() {
             </Link>
           </div>
           {!recentTickets || recentTickets.length === 0 ? (
-            <p className="text-sm text-tertiary py-4">✨ تیکت بازی وجود ندارد.</p>
+            <p className="text-sm text-tertiary py-4"><Icon name="magic" /> تیکت بازی وجود ندارد.</p>
           ) : (
             <div className="divide-y divide-subtle">
               {(recentTickets as (Ticket & { product?: Pick<Product, 'name'> | null })[]).map((t) => (
@@ -149,9 +152,9 @@ export default async function AdminDashboardPage() {
                   className="py-2.5 flex items-center justify-between gap-3 hover:bg-muted px-2 rounded-xl transition"
                 >
                   <div className="min-w-0">
-                    <div className="text-sm font-medium text-primary truncate">💬 {t.subject}</div>
+                    <div className="text-sm font-medium text-primary truncate"><Icon name="message" /> {t.subject}</div>
                     <div className="text-xs text-tertiary">
-                      👤 {t.customer_name} {t.product?.name ? `· 📦 ${t.product.name}` : ''}
+                      <Icon name="user" /> {t.customer_name} {t.product?.name ? `· ${t.product.name}` : ''}
                     </div>
                   </div>
                   <div className="flex items-center gap-2 shrink-0">

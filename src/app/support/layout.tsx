@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { ThemeToggle } from '@/components/ThemeToggle';
+import { Icon } from '@/components/Icon';
 
 export default function SupportLayout({ children }: { children: React.ReactNode }) {
   return (
@@ -8,7 +9,7 @@ export default function SupportLayout({ children }: { children: React.ReactNode 
         <div className="max-w-4xl mx-auto px-4 py-3.5 flex items-center justify-between gap-3">
           <Link href="/support" className="flex items-center gap-2.5 font-bold text-primary">
             <span className="w-9 h-9 rounded-xl bg-brand text-on-brand flex items-center justify-center text-lg shadow-sm">
-              🛡️
+              <Icon name="shield" /> 
             </span>
             <div>
               <div>پرتال مشتریان و پشتیبانی</div>
@@ -21,7 +22,7 @@ export default function SupportLayout({ children }: { children: React.ReactNode 
               href="/support/tickets/new"
               className="rounded-xl bg-brand hover:opacity-95 text-on-brand text-xs font-medium px-3.5 py-2 transition shadow-sm"
             >
-              ✉️ ثبت تیکت جدید
+              <Icon name="mail" /> ثبت تیکت جدید
             </Link>
           </div>
         </div>

@@ -2,6 +2,7 @@ import Link from 'next/link';
 import { requireAdmin } from '@/lib/admin-auth';
 import type { Product } from '@/types/database';
 import { createReleaseAction } from '../actions';
+import { Icon } from '@/components/Icon';
 
 export const dynamic = 'force-dynamic';
 
@@ -19,7 +20,7 @@ export default async function CreateReleasePage({
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <h1 className="text-xl font-bold text-primary flex items-center gap-2">
-          <span>🚀</span>
+          <Icon name="rocket" />
           <span>ثبت نسخه جدید</span>
         </h1>
         <Link href="/admin/releases" className="text-sm text-secondary hover:text-primary hover:underline">
@@ -29,7 +30,7 @@ export default async function CreateReleasePage({
 
       {sp.error && (
         <div className="rounded-xl bg-anar-500/15 border border-anar-500/30 text-anar-700 dark:text-anar-300 text-sm px-4 py-3">
-          ❌ خطا: {sp.error}
+          <Icon name="error" /> خطا: {sp.error}
         </div>
       )}
 
@@ -39,7 +40,7 @@ export default async function CreateReleasePage({
       >
         <div className="grid sm:grid-cols-3 gap-4">
           <div>
-            <label className="block text-xs font-medium text-secondary mb-1">📦 محصول *</label>
+            <label className="block text-xs font-medium text-secondary mb-1"><Icon name="package" /> محصول *</label>
             <select
               name="product_id"
               required
@@ -53,7 +54,7 @@ export default async function CreateReleasePage({
             </select>
           </div>
           <div>
-            <label className="block text-xs font-medium text-secondary mb-1">🏷️ نسخه *</label>
+            <label className="block text-xs font-medium text-secondary mb-1"><Icon name="tag" /> نسخه *</label>
             <input
               name="version"
               required
@@ -63,20 +64,20 @@ export default async function CreateReleasePage({
             />
           </div>
           <div>
-            <label className="block text-xs font-medium text-secondary mb-1">📡 کانال</label>
+            <label className="block text-xs font-medium text-secondary mb-1"><Icon name="signal" /> کانال</label>
             <select
               name="channel"
               defaultValue="stable"
               className="w-full rounded-xl border border-input bg-primary text-primary px-3 py-2 text-sm"
             >
-              <option value="stable">🟢 Stable</option>
-              <option value="beta">🟠 Beta</option>
+              <option value="stable">Stable</option>
+              <option value="beta">Beta</option>
             </select>
           </div>
         </div>
 
         <div className="rounded-xl bg-secondary border border-subtle p-4 space-y-3">
-          <div className="text-xs font-semibold text-primary">📁 فایل نسخه (یکی از ۳ روش زیر):</div>
+          <div className="text-xs font-semibold text-primary"><Icon name="folder" /> فایل نسخه (یکی از ۳ روش زیر):</div>
           <div>
             <label className="block text-xs text-secondary mb-1">۱. آپلود مستقیم فایل (حداکثر ۵۰MB روی Vercel)</label>
             <input name="file" type="file" className="text-xs text-primary" />
@@ -124,7 +125,7 @@ export default async function CreateReleasePage({
             />
           </div>
           <div>
-            <label className="block text-xs font-medium text-secondary mb-1">📊 درصد انتشار تدریجی (۱ تا ۱۰۰)</label>
+            <label className="block text-xs font-medium text-secondary mb-1"><Icon name="chart" /> درصد انتشار تدریجی (۱ تا ۱۰۰)</label>
             <input
               name="rollout_percent"
               type="number"
@@ -137,18 +138,18 @@ export default async function CreateReleasePage({
         </div>
 
         <div>
-          <label className="block text-xs font-medium text-secondary mb-1">📝 تغییرات نسخه (Release Notes)</label>
+          <label className="block text-xs font-medium text-secondary mb-1"><Icon name="note" /> تغییرات نسخه (Release Notes)</label>
           <textarea name="notes" rows={3} className="w-full rounded-xl border border-input bg-primary text-primary px-3 py-2 text-sm" />
         </div>
 
         <div className="flex items-center gap-6 text-sm text-primary">
           <label className="flex items-center gap-2 cursor-pointer">
             <input type="checkbox" name="mandatory" />
-            ⚠️ آپدیت اجباری
+            <Icon name="warn" /> آپدیت اجباری
           </label>
           <label className="flex items-center gap-2 cursor-pointer">
             <input type="checkbox" name="publish" defaultChecked />
-            🚀 انتشار فوری
+            <Icon name="rocket" /> انتشار فوری
           </label>
         </div>
 
@@ -156,7 +157,7 @@ export default async function CreateReleasePage({
           type="submit"
           className="rounded-xl bg-brand hover:opacity-95 text-on-brand font-medium px-6 py-2.5 text-sm cursor-pointer shadow-sm"
         >
-          🔏 ثبت و امضای Ed25519
+          <Icon name="fileKey" /> ثبت و امضای Ed25519
         </button>
       </form>
     </div>

@@ -2,6 +2,7 @@ import Link from 'next/link';
 import { redirect } from 'next/navigation';
 import { getPortalLicense } from '@/lib/portal-auth';
 import { portalLoginAction } from './actions';
+import { Icon } from '@/components/Icon';
 
 export const dynamic = 'force-dynamic';
 
@@ -22,7 +23,7 @@ export default async function SupportHomePage({
       <div className="bg-elevated rounded-2xl border border-subtle p-6 space-y-5 shadow-md">
         <div className="space-y-1.5">
           <h1 className="text-lg font-bold text-primary flex items-center gap-2">
-            <span>🔑</span>
+            <Icon name="key" />
             <span>ورود به حساب لایسنس</span>
           </h1>
           <p className="text-xs text-secondary leading-relaxed">
@@ -32,13 +33,13 @@ export default async function SupportHomePage({
 
         {sp.error && (
           <div className="rounded-xl bg-anar-500/15 border border-anar-500/30 text-anar-700 dark:text-anar-300 text-xs px-4 py-3">
-            ❌ اطلاعات واردشده با هیچ لایسنسی مطابقت ندارد.
+            <Icon name="error" /> اطلاعات واردشده با هیچ لایسنسی مطابقت ندارد.
           </div>
         )}
 
         <form action={portalLoginAction} className="space-y-4">
           <div>
-            <label className="block text-xs font-medium text-secondary mb-1">🔑 کلید لایسنس</label>
+            <label className="block text-xs font-medium text-secondary mb-1"><Icon name="key" /> کلید لایسنس</label>
             <input
               name="license_key"
               required
@@ -48,7 +49,7 @@ export default async function SupportHomePage({
             />
           </div>
           <div>
-            <label className="block text-xs font-medium text-secondary mb-1">📱 شماره موبایل یا ایمیل</label>
+            <label className="block text-xs font-medium text-secondary mb-1"><Icon name="phone" /> شماره موبایل یا ایمیل</label>
             <input
               name="contact"
               required
@@ -61,7 +62,7 @@ export default async function SupportHomePage({
             type="submit"
             className="w-full rounded-xl bg-brand hover:opacity-95 text-on-brand font-medium py-2.5 text-sm transition cursor-pointer shadow-sm"
           >
-            🔓 ورود به پرتال
+            <Icon name="unlock" /> ورود به پرتال
           </button>
         </form>
       </div>
@@ -69,7 +70,7 @@ export default async function SupportHomePage({
       <div className="text-center text-xs text-tertiary">
         لایسنس ندارید یا برای خرید سوال دارید؟{' '}
         <Link href="/support/tickets/new" className="text-brand font-medium hover:underline">
-          ✉️ ثبت تیکت بدون کلید لایسنس
+          <Icon name="mail" /> ثبت تیکت بدون کلید لایسنس
         </Link>
       </div>
     </div>

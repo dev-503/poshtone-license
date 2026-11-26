@@ -83,17 +83,13 @@ export async function POST(req: NextRequest) {
       throw new Error(`Telemetry insert failed: ${error.message}`);
     }
 
-    if (licenseId) {
-      await supabase
-        .from('activations')
-        .update({
-          last_seen_at: nowIso,
-          ...(d.app_version ? { app_version: d.app_version } : {}),
-        })
-        .eq('license_id', licenseId)
-        .eq('device_id', d.device_id)
-        .is('revoked_at', null);
-    }
+    // Refresh "last seen" for this device even when the app sends no license key (trial / not yet activated).
+    await supabase.rpc('touch_device', {
+      p_product_id: product.id,
+      p_device_id: d.device_id,
+      p_app_version: d.app_version ?? null,
+      p_os: d.os ?? null,
+    });
 
     return apiOk({ accepted: rows.length }, 202);
   } catch (err) {
