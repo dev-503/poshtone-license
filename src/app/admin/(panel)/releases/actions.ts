@@ -41,6 +41,8 @@ export async function createReleaseAction(formData: FormData) {
   let file_size: number | null = null;
   let sha256: string | null = null;
 
+  let storageError: string | null = null;
+
   try {
     if (file && file.size > 0) {
       const ext = file.name.split('.').pop()?.replace(/[^A-Za-z0-9]/g, '') || 'bin';
@@ -54,24 +56,29 @@ export async function createReleaseAction(formData: FormData) {
     } else if (storageKey) {
       const stat = await statAndHashReleaseObject(storageKey);
       if (!stat) {
-        redirect(`/admin/releases/create?error=${encodeURIComponent('فایل با این کلید در باکت یافت نشد.')}`);
+        storageError = 'فایل با این کلید در باکت یافت نشد.';
+      } else {
+        file_path = storageKey;
+        managed_file = false;
+        file_size = stat.size;
+        sha256 = sha256Input || stat.sha256;
       }
-      file_path = storageKey;
-      managed_file = false;
-      file_size = stat.size;
-      sha256 = sha256Input || stat.sha256;
     } else if (externalUrl) {
       if (!/^[a-f0-9]{64}$/.test(sha256Input)) {
-        redirect(`/admin/releases/create?error=${encodeURIComponent('برای لینک خارجی، SHA-256 معتبر (۶۴ کاراکتر هگز) الزامی است.')}`);
+        storageError = 'برای لینک خارجی، SHA-256 معتبر (۶۴ کاراکتر هگز) الزامی است.';
+      } else {
+        external_url = externalUrl;
+        sha256 = sha256Input;
       }
-      external_url = externalUrl;
-      sha256 = sha256Input;
     } else {
-      redirect(`/admin/releases/create?error=${encodeURIComponent('فایل، کلید باکت یا لینک خارجی را وارد کنید.')}`);
+      storageError = 'فایل، کلید باکت یا لینک خارجی را وارد کنید.';
     }
   } catch (err) {
-    const msg = err instanceof Error ? err.message : 'storage_error';
-    redirect(`/admin/releases/create?error=${encodeURIComponent(msg)}`);
+    storageError = err instanceof Error ? err.message : 'storage_error';
+  }
+
+  if (storageError) {
+    redirect(`/admin/releases/create?error=${encodeURIComponent(storageError)}`);
   }
 
   const signature = defaultSigner().signRaw(`${product.slug}|${version}|${sha256}`);

@@ -238,8 +238,11 @@ export async function generateOfflineTokenAction(formData: FormData) {
   if (!data) return;
 
   const lic = data as License & { product: Product };
+  let token = '';
+  let errMsg: string | null = null;
   try {
     const res = await issueOfflineLicense(lic, lic.product, deviceId, days);
+    token = res.token;
     await recordAudit({
       userId: user.id,
       action: 'license.offline_issued',
@@ -248,10 +251,14 @@ export async function generateOfflineTokenAction(formData: FormData) {
       label: lic.key,
       meta: { device_id: deviceId, days },
     });
-    revalidatePath(`/admin/licenses/${id}`);
-    redirect(`/admin/licenses/${id}?offline_token=${encodeURIComponent(res.token)}`);
   } catch (err) {
-    const msg = err instanceof Error ? err.message : 'offline_error';
-    redirect(`/admin/licenses/${id}?error=${encodeURIComponent(msg)}`);
+    errMsg = err instanceof Error ? err.message : 'offline_error';
   }
+
+  if (errMsg) {
+    redirect(`/admin/licenses/${id}?error=${encodeURIComponent(errMsg)}`);
+  }
+
+  revalidatePath(`/admin/licenses/${id}`);
+  redirect(`/admin/licenses/${id}?offline_token=${encodeURIComponent(token)}`);
 }
