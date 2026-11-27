@@ -19,6 +19,7 @@ export default async function AdminDashboardPage() {
     { count: openTicketsCount },
     { data: expiringSoon },
     { data: recentTickets },
+    overview,
   ] = await Promise.all([
     admin.from('products').select('*', { count: 'exact', head: true }).eq('active', true),
     admin
@@ -42,9 +43,8 @@ export default async function AdminDashboardPage() {
       .in('status', ['open', 'pending'])
       .order('last_reply_at', { ascending: false })
       .limit(8),
+    getAnalyticsOverview(admin, 30),
   ]);
-
-  const overview = await getAnalyticsOverview(admin, 30);
   const activeDevicesCount = overview?.devices.active ?? 0;
 
   const stats = [

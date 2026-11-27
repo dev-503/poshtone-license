@@ -5,7 +5,6 @@ import { usePathname, useRouter } from 'next/navigation';
 import { createClient } from '@/lib/supabase/client';
 import { Icon, type IconName } from '@/components/Icon';
 import { ThemeToggle } from './ThemeToggle';
-import { Icon } from '@/components/Icon';
 
 const NAV = [
   { href: '/admin', label: 'داشبورد', icon: 'home' as IconName, exact: true },
