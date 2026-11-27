@@ -21,3 +21,13 @@
   background-image: radial-gradient(color-mix(in srgb, var(--k-bg-brand) 12%, transparent) 1px, transparent 1px);
   background-size: 20px 20px;
 }
+
+/* Product orbit (src/components/Orbit.tsx) */
+@keyframes orbit-spin {
+  to { transform: rotate(360deg); }
+}
+.orbit-spin { animation: orbit-spin 90s linear infinite; }
+.orbit-counter { animation: orbit-spin 90s linear infinite reverse; }
+@media (prefers-reduced-motion: reduce) {
+  .orbit-spin, .orbit-counter { animation: none; }
+}
