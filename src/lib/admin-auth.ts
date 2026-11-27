@@ -1,8 +1,10 @@
+import { cache } from 'react';
 import { redirect } from 'next/navigation';
 import { createClient } from '@/lib/supabase/server';
 import { createAdminClient } from '@/lib/supabase/admin';
 
-export async function requireAdmin() {
+/** Memoized per request: the panel layout and the page both call it, but Supabase Auth + profiles are hit only once. */
+export const requireAdmin = cache(async () => {
   const supabase = await createClient();
   const {
     data: { user },
@@ -24,4 +26,4 @@ export async function requireAdmin() {
   }
 
   return { user, profile, admin };
-}
+});

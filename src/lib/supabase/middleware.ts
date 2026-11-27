@@ -45,19 +45,8 @@ export async function updateSession(request: NextRequest) {
       loginUrl.searchParams.set('next', pathname);
       return NextResponse.redirect(loginUrl);
     }
-
-    const { data: profile } = await supabase
-      .from('profiles')
-      .select('is_admin')
-      .eq('id', user.id)
-      .single();
-
-    if (!profile?.is_admin) {
-      const loginUrl = request.nextUrl.clone();
-      loginUrl.pathname = '/admin/login';
-      loginUrl.searchParams.set('error', 'not_admin');
-      return NextResponse.redirect(loginUrl);
-    }
+    // is_admin is NOT re-checked here: it cost an extra DB round trip on every navigation, and
+    // requireAdmin() (admin layout + every server action) enforces it authoritatively.
   }
 
   if (isLoginRoute && user) {
