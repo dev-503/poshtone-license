@@ -1,15 +1,20 @@
 import Link from 'next/link';
 import { ThemeToggle } from '@/components/ThemeToggle';
 import { Icon } from '@/components/Icon';
+import { Orbit } from '@/components/Orbit';
 
 export default function HomePage() {
   return (
-    <main className="min-h-screen flex flex-col items-center justify-center p-6 bg-primary kashi-tile-bg relative">
+    <main className="min-h-screen flex flex-col items-center justify-center p-4 sm:p-6 bg-primary kashi-tile-bg relative">
       <div className="absolute top-4 left-4">
         <ThemeToggle />
       </div>
 
-      <div className="max-w-xl w-full bg-elevated rounded-2xl shadow-lg border border-subtle p-8 text-center space-y-6">
+      {/* The orbit is first in the DOM: it sits above the text on mobile and beside it on wide screens. */}
+      <div className="w-full max-w-5xl grid md:grid-cols-2 gap-8 items-center">
+        <Orbit />
+
+      <div className="w-full bg-elevated rounded-2xl shadow-lg border border-subtle p-8 text-center space-y-6">
         <div className="mx-auto w-16 h-16 rounded-2xl bg-brand text-on-brand flex items-center justify-center text-3xl shadow-md">
           <Icon name="brand" /> 
         </div>
@@ -48,6 +53,7 @@ export default function HomePage() {
             کاشی (Kashi)
           </a>
         </div>
+      </div>
       </div>
     </main>
   );
